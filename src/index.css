@@ -98,7 +98,6 @@ body {
 
 /* WhatsApp bubble tail — two overlapping triangles (white border + green fill) */
 .wa-bubble {
-  position: relative;
 }
 .wa-bubble::before {
   content: '';
