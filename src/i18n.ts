@@ -22,9 +22,9 @@ const resources = {
         centeredAround: "centered around",
         values: "Movement · Body Awareness · Creativity · Connection · Playfulness",
         join: "Join us for an event today 🙂",
-        p1: "Connect with like-minded individuals passionate about community, conscious living, movement, body-awareness, creativity, connection and Laughter.",
-        p2: "Whether you’re seeking new friendships, exploring spiritual practices, looking for a new creative hobby, we welcome you!",
-        p3: "Let’s build a supportive network, share ideas, and discover the beauty of Malaga together.",
+        p1: "Connect with like-minded individuals passionate about community, conscious living, movement, body-awareness, creativity, connection and laughter.",
+        p2: "Whether you’re seeking new friendships, exploring spiritual practices, looking for a new creative hobby, we welcome you! Let’s build a supportive network, share ideas, and discover the beauty of Malaga together.",
+        p3: "",
         checkCalendar: "Check our calendar for the next event"
       },
       experience: {

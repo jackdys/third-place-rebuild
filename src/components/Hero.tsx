@@ -111,6 +111,25 @@ const Hero = ({ onCalendarOpen }: Props) => {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute bottom-0 left-0 right-0" style={{ height: '75%', background: `linear-gradient(to top,
+          #0a0a0a 0%,
+          rgba(10,10,10,0.987) 6.3%,
+          rgba(10,10,10,0.951) 12.2%,
+          rgba(10,10,10,0.896) 17.8%,
+          rgba(10,10,10,0.825) 23.2%,
+          rgba(10,10,10,0.741) 28.5%,
+          rgba(10,10,10,0.648) 33.9%,
+          rgba(10,10,10,0.550) 39.4%,
+          rgba(10,10,10,0.452) 45.2%,
+          rgba(10,10,10,0.359) 51.3%,
+          rgba(10,10,10,0.275) 57.8%,
+          rgba(10,10,10,0.204) 64.7%,
+          rgba(10,10,10,0.147) 71.9%,
+          rgba(10,10,10,0.102) 79.3%,
+          rgba(10,10,10,0.066) 86.6%,
+          rgba(10,10,10,0.038) 93.4%,
+          transparent 100%
+        )` }} />
       </div>
 
       {/* Firefly layer — full hero width */}
@@ -153,7 +172,7 @@ const Hero = ({ onCalendarOpen }: Props) => {
         <div className="mt-12 flex flex-col md:flex-row gap-6 justify-center items-center">
           <button
             onClick={onCalendarOpen}
-            className="bg-[#c49a68] text-white px-10 py-4 rounded-lg text-xl font-bold hover:bg-tp-orange transition-all shadow-xl hover:scale-105 active:scale-95"
+            className="bg-[#c49a68] text-white px-10 py-4 rounded-lg text-xl font-bold border-[3px] border-white/50 hover:bg-white hover:text-[#c49a68] hover:border-white transition-all shadow-xl hover:scale-105 active:scale-95"
           >
             {t('hero.calendar')}
           </button>

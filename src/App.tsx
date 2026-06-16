@@ -171,7 +171,7 @@ function App() {
         <Hero onCalendarOpen={() => setCalendarOpen(true)} />
 
         {/* 2. Main Intro */}
-        <section className="relative py-32 px-6 bg-tp-black overflow-hidden">
+        <section className="relative py-32 px-6 bg-tp-black overflow-hidden -mt-2">
           {/* Ambient Glows */}
           <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-tp-green/10 rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/3 pointer-events-none" />
           <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-tp-orange/10 rounded-full blur-[100px] translate-x-1/4 -translate-y-1/4 pointer-events-none" />
@@ -186,22 +186,28 @@ function App() {
               <ValuesReveal values={t('intro.values')} />
             </div>
 
-            {/* Glassmorphism Content Card */}
-            <div className="relative bg-white/[0.02] border border-white/10 rounded-[2.5rem] p-8 md:p-16 backdrop-blur-xl shadow-2xl">
-              <div className="absolute -top-10 left-10 text-tp-orange/20 text-[10rem] font-accent leading-none pointer-events-none">"</div>
-              
-              <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
-                <div className="space-y-6 text-xl text-tp-cream/80 leading-relaxed font-light">
-                  <p>{t('intro.p1')}</p>
-                  <p>{t('intro.p2')}</p>
-                </div>
-                
-                <div className="flex flex-col justify-center">
-                  <blockquote className="border-l-4 border-tp-orange pl-8 py-2 italic text-2xl md:text-3xl text-white font-accent leading-snug">
-                    {t('intro.p3')}
-                  </blockquote>
-                </div>
+            {/* Content Card */}
+            <div className="relative flex flex-col items-center text-center py-8 md:py-12">
+
+              {/* Top teal vertical accent */}
+              <div className="flex flex-col items-center mb-8">
+                <div className="w-px h-10 bg-gradient-to-b from-transparent to-tp-orange" />
+                <div className="w-2 h-2 rounded-full bg-tp-orange mt-1" />
               </div>
+
+              <div className="space-y-6 text-2xl md:text-4xl text-white/90 leading-snug italic max-w-2xl"
+                   style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+                {t('intro.p2').split('! ').map((part, i, arr) => (
+                  <p key={i}>{part}{i < arr.length - 1 ? '!' : ''}</p>
+                ))}
+              </div>
+
+              {/* Bottom teal vertical accent */}
+              <div className="flex flex-col items-center mt-8">
+                <div className="w-2 h-2 rounded-full bg-tp-orange" />
+                <div className="w-px h-10 bg-gradient-to-b from-tp-orange to-transparent mt-1" />
+              </div>
+
             </div>
             
             {/* CTA */}
@@ -213,7 +219,7 @@ function App() {
                 {t('intro.join')}
               </button>
               <div className="mt-8">
-                <button onClick={() => setCalendarOpen(true)} className="text-tp-orange/80 hover:text-tp-orange hover:underline underline-offset-8 decoration-2 transition-all font-medium flex items-center gap-2">
+                <button onClick={() => setCalendarOpen(true)} className="text-tp-orange/80 hover:text-white hover:underline underline-offset-8 decoration-2 transition-all font-medium flex items-center gap-2">
                   <span>{t('intro.checkCalendar')}</span>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
@@ -338,12 +344,10 @@ function App() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Join today on WhatsApp"
-      className="wa-bubble fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-4 md:right-6 z-[150] flex items-center gap-3 bg-[#25D366] text-white pl-4 md:pl-5 pr-3 md:pr-4 py-3 border-[3px] border-white/70 shadow-lg hover:scale-105 active:scale-95 transition-transform" style={{ borderRadius: '1.5rem 1.5rem 1.5rem 0.25rem' }}
+      className="wa-flicker fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-4 md:right-6 z-[150] flex items-center gap-3 bg-[#25D366] text-white px-4 md:px-5 py-3 rounded-lg shadow-lg hover:scale-105 active:scale-95 transition-transform"
     >
-      {/* Pulse ring */}
-      <span className="absolute inset-0 bg-[#25D366] wa-pulse" style={{ borderRadius: '1.5rem 1.5rem 1.5rem 0.25rem' }} />
-      <span className="relative z-10 font-bold text-sm tracking-wide whitespace-nowrap">{t('joinToday')}</span>
-      <FaWhatsapp className="w-7 h-7 relative z-10 shrink-0 text-white" />
+      <span className="font-bold text-sm tracking-wide whitespace-nowrap">{t('joinToday')}</span>
+      <FaWhatsapp className="w-6 h-6 shrink-0 text-white" />
     </a>
     </>
   )
