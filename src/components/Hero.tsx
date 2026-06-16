@@ -1,9 +1,11 @@
-import React from 'react';
+import { useTranslation } from 'react-i18next'
 
 const Hero = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Nature Background - Exact image from your provided copy */}
+      {/* Nature Background */}
       <div className="absolute inset-0 z-0">
         <img 
           src="https://thirdplacemalaga.com/wp-content/uploads/2025/08/actionvance-g41ZkoO75rE-unsplash-scaled.jpg" 
@@ -15,21 +17,23 @@ const Hero = () => {
       
       <div className="relative z-10 text-center px-4 max-w-5xl">
         <h2 className="text-2xl md:text-3xl text-white font-light italic mb-4 drop-shadow-lg opacity-90">
-          "You’re almost there"
+          {t('hero.subtitle')}
         </h2>
-        <h1 className="text-6xl md:text-9xl font-bold text-white mb-8 tracking-tighter drop-shadow-2xl">
-          Third Place Málaga
-        </h1>
+        <img 
+          src="/ThirdPlace-Logo.png" 
+          alt="Third Place Málaga Logo" 
+          className="w-full max-w-lg md:max-w-2xl mx-auto mb-8 drop-shadow-2xl opacity-90 saturate-50 contrast-125 transition-all duration-700 hover:opacity-100 hover:saturate-100"
+        />
         
         <div className="mt-12 flex flex-col md:flex-row gap-6 justify-center items-center">
           <a 
             href="https://thirdplacemalaga.com/calendar"
             className="bg-tp-green text-white px-10 py-4 rounded-full text-xl font-bold hover:bg-tp-orange transition-all shadow-xl hover:scale-105 active:scale-95"
           >
-            Check our calendar
+            {t('hero.calendar')}
           </a>
           <button className="text-white border-b-2 border-white/50 hover:border-white transition-all pb-1 text-lg font-medium">
-            Discover Activities
+            {t('hero.discover')}
           </button>
         </div>
       </div>

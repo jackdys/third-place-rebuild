@@ -10,9 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-dev-inspector/vite-plugin": "^2.0.1",
     "@tailwindcss/vite": "^4.3.1",
+    "i18next": "^26.3.1",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dev-inspector": "^2.0.1",
+    "react-dom": "^19.2.6",
+    "react-i18next": "^17.0.8"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

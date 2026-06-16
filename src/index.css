@@ -1,5 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Open+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
 
 @theme {
   --color-tp-green: #2D5A27;
@@ -7,9 +7,9 @@
   --color-tp-cream: #FAF9F6;
   --color-tp-black: #0a0a0a; /* A rich, conscious black */
   
-  --font-sans: 'Montserrat', sans-serif;
-  --font-body: 'Open Sans', sans-serif;
-  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-serif: 'Lora', serif;
 }
 
 /* Global resets and base styles */
@@ -21,8 +21,11 @@ body {
   background-position: center;
 }
 
-h1, h2, h3, h4 {
-  @apply font-sans;
+/* Subtle organic noise texture */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  mix-blend-mode: overlay;
 }
 
 .font-accent {
