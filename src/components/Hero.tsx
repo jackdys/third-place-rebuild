@@ -132,8 +132,8 @@ const Hero = ({ onCalendarOpen }: Props) => {
         )` }} />
       </div>
 
-      {/* Firefly layer — full hero width */}
-      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+      {/* Firefly layer — fades out before the button row */}
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, maskImage: 'linear-gradient(to bottom, black 50%, transparent 72%)', WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 72%)' }}>
         {FIREFLIES.map((ff, i) => (
           <span
             key={i}
