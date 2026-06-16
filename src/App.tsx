@@ -5,6 +5,7 @@ import { FaWhatsapp, FaInstagram, FaFacebook, FaMeetup } from 'react-icons/fa'
 import { SiGmail } from 'react-icons/si'
 import Hero from './components/Hero'
 import CalendarModal from './components/CalendarModal'
+import ValuesReveal from './components/ValuesReveal'
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -80,10 +81,11 @@ function App() {
           <div className="relative max-w-5xl mx-auto">
             {/* Header */}
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold text-white mb-6 leading-tight">
-                {t('intro.title1')} <br />
-                <span className="text-tp-orange font-accent italic font-light">{t('intro.title2')}</span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold text-white mb-4 leading-tight">
+                {t('intro.title1')}
               </h2>
+              <p className="text-tp-cream/40 text-xs md:text-sm uppercase tracking-[0.4em] mb-6">{t('intro.centeredAround')}</p>
+              <ValuesReveal values={t('intro.values')} />
             </div>
 
             {/* Glassmorphism Content Card */}
@@ -165,6 +167,31 @@ function App() {
 
       {/* Footer */}
       <footer className="bg-tp-black pt-32 pb-16 px-8 border-t border-white/10">
+
+        {/* Map Section */}
+        <div className="max-w-6xl mx-auto mb-20">
+          <h5 className="font-bold text-tp-orange text-xl mb-8 uppercase tracking-widest">{t('footer.visit')}</h5>
+          <div className="rounded-3xl overflow-hidden border border-white/10 h-[300px] md:h-[500px] mb-8 shadow-2xl">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3200!2d-4.433879!3d36.7072371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f7d4dc7e884b%3A0x6c79b830dd8529fd!2sEspacio%20Bohemia%20M%C3%A1laga!5e0!3m2!1sen!2ses!4v1718536000000!5m2!1sen!2ses"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen={true}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Espacio Bohemia Location"
+            ></iframe>
+          </div>
+          <div className="text-tp-cream/80 text-lg leading-relaxed text-center">
+            <p className="font-bold text-white italic">Espacio Bohemia Málaga</p>
+            <p>Calle Leopoldo Alas Clarín 3,</p>
+            <p>planta baja, Local D (a la derecha del No. 3),</p>
+            <p>Málaga</p>
+          </div>
+        </div>
+
+        {/* About + Connect */}
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 mb-20">
           {/* About Section */}
           <div>
@@ -175,7 +202,6 @@ function App() {
               <li><a href="https://thirdplacemalaga.com/contact" className="hover:text-white transition-colors font-bold text-white">{t('footer.contact')}</a></li>
             </ul>
           </div>
-
 
           {/* Social & Contact */}
           <div>
@@ -200,43 +226,10 @@ function App() {
           </div>
         </div>
 
-        {/* Full Width Location Section */}
-        <div className="max-w-6xl mx-auto">
-          <h5 className="font-bold text-tp-orange text-xl mb-8 uppercase tracking-widest">{t('footer.visit')}</h5>
-          <div className="rounded-3xl overflow-hidden border border-white/10 h-[500px] mb-8 shadow-2xl">
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3200!2d-4.433879!3d36.7072371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f7d4dc7e884b%3A0x6c79b830dd8529fd!2sEspacio%20Bohemia%20M%C3%A1laga!5e0!3m2!1sen!2ses!4v1718536000000!5m2!1sen!2ses" 
-              width="100%" 
-              height="100%" 
-              style={{ border: 0 }} 
-              allowFullScreen={true} 
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Espacio Bohemia Location"
-            ></iframe>
-          </div>
-          <div className="text-tp-cream/80 text-lg leading-relaxed text-center">
-            <p className="font-bold text-white italic">Espacio Bohemia Málaga</p>
-            <p>Calle Leopoldo Alas Clarín 3,</p>
-            <p>planta baja, Local D (a la derecha del No. 3),</p>
-            <p>Málaga</p>
-          </div>
-        </div>
-
         <div className="max-w-6xl mx-auto mt-32 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-tp-cream/40 text-xs tracking-[0.3em] uppercase">
             © {new Date().getFullYear()} thirdplacemalaga | {t('footer.crafted')}
           </p>
-          <div className="flex gap-4 items-center">
-            <img 
-              src={i18n.language === 'es' ? "https://thirdplacemalaga.com/wp-content/plugins/translatepress-multilingual/assets/flags/4x3/es_ES.svg" : "https://thirdplacemalaga.com/wp-content/plugins/translatepress-multilingual/assets/flags/4x3/en_GB.svg"}
-              alt={i18n.language === 'es' ? "Español" : "English"}
-              className="w-6 h-auto rounded-sm opacity-60" 
-            />
-            <span className="text-tp-cream/40 text-xs font-bold uppercase tracking-widest">
-              {i18n.language === 'es' ? "Español" : "English"}
-            </span>
-          </div>
         </div>
       </footer>
     </main>

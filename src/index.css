@@ -51,6 +51,36 @@ body {
   animation: wa-pulse 2.8s ease-in-out infinite;
 }
 
+@keyframes value-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes dot-pulse {
+  0%   { opacity: 0; transform: scale(0.6); }
+  50%  { opacity: 1; transform: scale(1.4); color: #2b997a; }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.value-word {
+  opacity: 0;
+  display: inline-block;
+}
+
+.value-dot {
+  opacity: 0;
+  display: inline-block;
+  margin: 0 0.5em;
+}
+
+.value-word.animate {
+  animation: value-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.value-dot.animate {
+  animation: dot-pulse 0.5s ease-out forwards;
+}
+
 /* Custom scrollbar to match the vibe */
 ::-webkit-scrollbar {
   width: 8px;

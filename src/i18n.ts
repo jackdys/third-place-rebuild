@@ -18,8 +18,9 @@ const resources = {
         discover: "Discover Activities"
       },
       intro: {
-        title1: "Your Bilingual Community in Malaga centered around",
-        title2: "movement, body-awareness, creativity, connection and Laughter.",
+        title1: "Your Bilingual Community in Málaga",
+        centeredAround: "centered around",
+        values: "Movement · Body Awareness · Creativity · Connection · Playfulness",
         join: "Join us for an event today 🙂",
         p1: "Connect with like-minded individuals passionate about community, conscious living, movement, body-awareness, creativity, connection and Laughter.",
         p2: "Whether you’re seeking new friendships, exploring spiritual practices, looking for a new creative hobby, we welcome you!",
@@ -48,7 +49,7 @@ const resources = {
         connect: "Connect",
         mail: "Mail",
         visit: "Visit Our Space",
-        crafted: "Crafted for Connection"
+        crafted: "Your bilingual community in Malaga"
       }
     }
   },
@@ -67,8 +68,9 @@ const resources = {
         discover: "Descubre Actividades"
       },
       intro: {
-        title1: "Tu comunidad bilingüe en Málaga centrada en",
-        title2: "el movimiento, la conciencia corporal, la creatividad, la conexión y la risa.",
+        title1: "Tu Comunidad Bilingüe en Málaga",
+        centeredAround: "centrada en",
+        values: "Movimiento · Conciencia Corporal · Creatividad · Conexión · Juego",
         join: "Únete a un evento hoy 🙂",
         p1: "Conecta con personas afines apasionadas por la comunidad, la vida consciente, el movimiento, la conciencia corporal, la creatividad, la conexión y la risa.",
         p2: "Ya sea que busques nuevas amistades, explorar prácticas espirituales o un nuevo pasatiempo creativo, ¡te damos la bienvenida!",
@@ -97,7 +99,7 @@ const resources = {
         connect: "Conecta",
         mail: "Correo",
         visit: "Visita Nuestro Espacio",
-        crafted: "Creado para Conectar"
+        crafted: "Tu comunidad bilingüe en Málaga"
       }
     }
   }
