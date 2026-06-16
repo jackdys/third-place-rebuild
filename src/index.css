@@ -102,22 +102,22 @@ body {
 .wa-bubble::before {
   content: '';
   position: absolute;
-  bottom: -17px;
-  left: 3px;
+  bottom: -18px;
+  left: -2px;
   width: 0;
   height: 0;
-  border-top: 18px solid rgba(255,255,255,0.7);
-  border-right: 16px solid transparent;
+  border-top: 20px solid rgba(255,255,255,0.7);
+  border-right: 18px solid transparent;
 }
 .wa-bubble::after {
   content: '';
   position: absolute;
-  bottom: -13px;
-  left: 6px;
+  bottom: -14px;
+  left: 1px;
   width: 0;
   height: 0;
-  border-top: 14px solid #25D366;
-  border-right: 13px solid transparent;
+  border-top: 16px solid #25D366;
+  border-right: 15px solid transparent;
 }
 
 /* Fireflies around the logo */
