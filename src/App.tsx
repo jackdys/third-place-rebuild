@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Inspector } from 'react-dev-inspector'
 import { FaWhatsapp, FaInstagram, FaFacebook, FaMeetup } from 'react-icons/fa'
@@ -6,10 +7,105 @@ import { SiGmail } from 'react-icons/si'
 import Hero from './components/Hero'
 import CalendarModal from './components/CalendarModal'
 import ValuesReveal from './components/ValuesReveal'
+import VideoModal from './components/VideoModal'
+import ActivityModal, { type ActivityData } from './components/ActivityModal'
 
 function App() {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [videoOpen, setVideoOpen] = useState(false);
+  const [activeActivity, setActiveActivity] = useState<ActivityData | null>(null);
+
+  const activities: Record<string, ActivityData> = {
+    sacred: {
+      key: 'sacred-connections',
+      tagEn: 'Sacred Connections', tagEs: 'Conexiones Sagradas',
+      titleEn: 'A Community for Presence, Expression and Introspection',
+      titleEs: 'Una Comunidad para la Presencia, Expresión e Introspección',
+      subtitleEn: '',
+      subtitleEs: '',
+      taglinesEn: [
+        'A space for authentic connection, deep conversations, and self-awareness.',
+        'Designed to cultivate empathy, presence, introspection and meaningful human interaction.',
+        'A mix of interactive exercises, guided discussions, and embodiment practices.',
+      ],
+      taglinesEs: [
+        'Un espacio para la conexión auténtica, conversaciones profundas y autoconciencia.',
+        'Diseñado para cultivar empatía, presencia, introspección e interacción humana significativa.',
+        'Una mezcla de ejercicios interactivos, debates guiados y prácticas de embodiment.',
+      ],
+      benefitsLabelEn: 'Core Elements',
+      benefitsLabelEs: 'Elementos Principales',
+      benefitsEn: [
+        'Active Listening & Presence – Learn to be fully present with yourself & others',
+        'Expressive & Reflective Exercises – Engage in structured prompts for vulnerability & insight',
+        'Body-Based Awareness – Explore non-verbal connection & somatic experiences. We work a lot with voice',
+        'Empathy & Relating Dynamics – Practice seeing & being seen without judgment',
+        'Group & Partner Work – From one-on-one conversations to full-group dynamics',
+      ],
+      benefitsEs: [
+        'Escucha Activa y Presencia – Aprende a estar plenamente presente contigo y con otros',
+        'Ejercicios Expresivos y Reflexivos – Exploración estructurada de la vulnerabilidad e introspección',
+        'Conciencia Corporal – Conexión no verbal y experiencias somáticas. Trabajamos mucho con la voz',
+        'Empatía y Dinámicas de Relación – Practica ver y ser visto sin juicio',
+        'Trabajo en Grupo y en Pareja – De conversaciones individuales a dinámicas de grupo completo',
+      ],
+      quoteEn: 'Think of Sacred Connections as a gym for the soul. People often work out to stay physically fit, but what about training the 🧠 mind, nurturing the ❤️ heart, or finding a deeper 🌍 sense of direction? That\'s where Sacred Connections comes in. Through weekly meetups, we create a steady journey of growth—helping you discover more about yourself and your place in the world, one session at a time.',
+      quoteEs: 'Piensa en Sacred Connections como un gimnasio para el alma. La gente hace ejercicio para mantenerse físicamente en forma, ¿pero qué hay de entrenar la 🧠 mente, nutrir el ❤️ corazón o encontrar un 🌍 sentido más profundo de dirección? Ahí es donde entra Sacred Connections. A través de encuentros semanales, creamos un viaje constante de crecimiento—ayudándote a descubrirte más a ti mismo y tu lugar en el mundo, sesión a sesión.',
+      visionEn: 'Inspired by philosophy, psychology, and conscious communication. We draw on ideas from family constellations, the Authentic Relating movement, non-violent communication, circling, and countless books, conversations, workshops, life experience & online resources etc…\n\nSessions follow a structured yet playful thematic rotation, giving each meetup its own flavour while still contributing to a larger journey.\n\nWe emphasise a safe, consensual, non-judgmental environment for exploration & growth.\n\nBuilding Community – We are creating a strong, vibrant "Third Place" in Málaga: a tribe/family where we grow together, check in with familiar faces, and build trust, understanding, and meaningful connection.',
+      visionEs: 'Inspirado en la filosofía, la psicología y la comunicación consciente. Nos nutrimos de ideas de las constelaciones familiares, el movimiento Authentic Relating, la comunicación no violenta, el circling, y un sinfín de libros, conversaciones, talleres, experiencias vitales y recursos en línea etc…\n\nLas sesiones siguen una rotación temática estructurada pero lúdica, dando a cada encuentro su propio sabor mientras contribuye a un viaje más amplio.\n\nHacemos énfasis en un entorno seguro, consensuado y sin juicios para la exploración y el crecimiento.\n\nConstruir Comunidad – Estamos creando un vibrante "Third Place" en Málaga: una tribu/familia donde crecemos juntos, nos reencontramos con caras conocidas y construimos confianza, comprensión y conexión significativa.',
+      structureEn: [],
+      structureEs: [],
+      themedNights: [
+        { titleEn: 'Topic Exploration Circle', titleEs: 'Círculo de Exploración Temática', descEn: 'Dive into a specific theme as a group and engage in different facilitated exercises. Slow down, practice active listening, and reflect together through honest sharing.', descEs: 'Sumérgete en un tema específico en grupo con ejercicios facilitados. Practica la escucha activa y reflexiona juntos a través del compartir honesto.' },
+        { titleEn: 'Authentic Connections', titleEs: 'Conexiones Auténticas', descEn: 'Explore presence-based practices and Authentic Relating exercises that invite openness, vulnerability, and deeper human connection.', descEs: 'Explora prácticas de presencia y ejercicios de Authentic Relating que invitan a la apertura, vulnerabilidad y conexión humana más profunda.' },
+        { titleEn: 'Sound & Spirit', titleEs: 'Sonido y Espíritu', descEn: 'A night dedicated to activating your voice, exploring sound, mantra chanting, and song circles to awaken presence and creative expression.', descEs: 'Una noche dedicada a activar tu voz, explorar el sonido, el canto de mantras y los círculos de canciones para despertar la presencia y la expresión creativa.' },
+        { titleEn: 'Reflection & Renewal', titleEs: 'Reflexión y Renovación', descEn: 'A gentle, grounding session to check in on your life and any insights or progress from previous sessions. Reflect on where you\'ve grown, what feels aligned, and renew your intentions for the path ahead. A perfect moment to pause, integrate, and recharge.', descEs: 'Una sesión suave y enraizante para hacer un balance de tu vida y los aprendizajes de sesiones anteriores. Reflexiona sobre dónde has crecido, qué se siente alineado, y renueva tus intenciones. Un momento perfecto para pausar, integrar y recargar.' },
+      ],
+      whenEn: 'Check calendar', whenEs: 'Ver calendario',
+      cost: '10€ / 30–35€',
+      costNoteEn: 'Cash at the door. Early bird monthly payment of 30€ per block of 4 sessions, or regular 35€ per 4 session blocks.',
+      costNoteEs: 'Efectivo en puerta. Early bird mensual de 30€ por bloque de 4 sesiones, o 35€ regular por 4 sesiones.',
+      noteEn: 'Spanish speakers are welcome! Many attendees (including the host) are bilingual. Keep in mind, however, that English is the main working language.\nOpen to all, regardless of religious or spiritual beliefs. Just come as you are.\nJoin our active WhatsApp group — attend a session to be added!\nLet\'s create sacred moments together 🌟',
+      noteEs: '¡Los hispanohablantes son bienvenidos! Muchos participantes (incluyendo el anfitrión) son bilingües. Ten en cuenta que el inglés es el idioma de trabajo principal.\nAbierto a todos, independientemente de creencias religiosas o espirituales. Ven tal como eres.\nÚnete a nuestro grupo activo de WhatsApp — ¡asiste a una sesión para ser añadido!\nCreemos momentos sagrados juntos 🌟',
+      media: { type: 'video', src: '/activities/sacred-video.mp4' },
+    },
+    improv: {
+      key: 'improv-theatre',
+      tagEn: 'Improv Theatre', tagEs: 'Teatro de Improvisación',
+      titleEn: 'Welcome to the Vibrant World of Improv Theatre in Málaga!',
+      titleEs: '¡Bienvenido al Vibrante Mundo del Teatro de Improvisación en Málaga!',
+      subtitleEn: 'Short-form, game-based improvisation where we create scenes, stories, and imagined worlds through fun, fast-paced mini-games. No experience needed.',
+      subtitleEs: 'Improvisación basada en juegos donde creamos escenas, historias y mundos imaginados. Sin experiencia necesaria.',
+      benefitsEn: ['Play and perform in bilingual sessions', 'Learn the fundamentals of great improv — what makes a scene work', 'Build compelling stories with others', 'Join a welcoming, playful community'],
+      benefitsEs: ['Actúa y juega en sesiones bilingües', 'Aprende los fundamentos de la improvisación', 'Construye historias con otros', 'Únete a una comunidad acogedora y juguetona'],
+      structureEn: ['Warm-up games', 'Mini scenes', 'Story building', 'Performance'],
+      structureEs: ['Calentamiento', 'Mini escenas', 'Construcción de historias', 'Actuación'],
+      whenEn: 'Sundays · 16:00 – 18:00', whenEs: 'Domingos · 16:00 – 18:00',
+      cost: '10€',
+      costNoteEn: 'Cash at the door', costNoteEs: 'En efectivo en la puerta',
+      noteEn: 'Bilingual & inclusive. Come play, learn, and laugh with us!',
+      noteEs: 'Bilingüe e inclusivo. ¡Ven a jugar, aprender y reír con nosotros!',
+    },
+    playfights: {
+      key: 'conscious-playfights',
+      tagEn: 'Conscious Playfights', tagEs: 'Juego Consciente',
+      titleEn: 'Movement, Connection, Non-Violent Confrontation & Play',
+      titleEs: 'Movimiento, Conexión, Confrontación No Violenta y Juego',
+      subtitleEn: 'A dynamic experience exploring conscious play through embodied connection and safe physical expression. Bilingual in Spanish and English.',
+      subtitleEs: 'Una experiencia dinámica de juego consciente a través de la conexión corporal y la expresión física segura. Bilingüe en español e inglés.',
+      benefitsEn: ['Develop body awareness and physical confidence', 'Explore safe, consensual physical confrontation', 'Build trust through playful wrestling and resistance', 'Experience joy in physical play while respecting boundaries'],
+      benefitsEs: ['Desarrolla conciencia corporal y confianza física', 'Explora la confrontación física segura y consensuada', 'Construye confianza a través del juego y la resistencia', 'Experimenta la alegría del juego físico respetando límites'],
+      structureEn: ['Icebreakers & movement', 'Playful wrestling', 'Cool-down & sharing'],
+      structureEs: ['Calentamiento y movimiento', 'Juego y lucha consciente', 'Enfriamiento y círculo de cierre'],
+      whenEn: 'Once a month · Saturdays', whenEs: 'Una vez al mes · Sábados',
+      cost: '15€ / 20€',
+      costNoteEn: 'Individual / Two people (10€ each)', costNoteEs: 'Individual / Dos personas (10€ cada uno)',
+      noteEn: 'Wear comfortable, loose-fitting clothing. No martial arts experience needed.',
+      noteEs: 'Ropa cómoda y holgada. No se necesita experiencia en artes marciales.',
+    },
+  };
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'es' : 'en';
@@ -20,6 +116,8 @@ function App() {
     <>
     <Inspector />
     {calendarOpen && <CalendarModal onClose={() => setCalendarOpen(false)} />}
+    {videoOpen && <VideoModal src="/activities/breathwork-video.mp4" onClose={() => setVideoOpen(false)} onCalendarOpen={() => { setVideoOpen(false); setCalendarOpen(true) }} />}
+    {activeActivity && <ActivityModal data={activeActivity} onClose={() => setActiveActivity(null)} onCalendarOpen={() => { setActiveActivity(null); setCalendarOpen(true) }} />}
     <main className="min-h-screen font-body selection:bg-tp-orange selection:text-tp-black overflow-x-hidden">
       {/* Skip Link for Accessibility */}
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:bg-tp-orange focus:text-white focus:p-4">
@@ -81,7 +179,7 @@ function App() {
           <div className="relative max-w-5xl mx-auto">
             {/* Header */}
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold text-white mb-4 leading-tight">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
                 {t('intro.title1')}
               </h2>
               <p className="text-tp-cream/40 text-xs md:text-sm uppercase tracking-[0.4em] mb-6">{t('intro.centeredAround')}</p>
@@ -129,17 +227,17 @@ function App() {
         {/* 3. Activities */}
         <section id="activities" className="py-32 px-6 bg-tp-black/50 border-y border-white/5">
           <div className="max-w-6xl mx-auto">
-            <h3 className="text-4xl font-bold text-white text-center mb-20">{t('experience.title')}</h3>
+            <h3 className="text-4xl font-bold text-white text-center mb-20" style={{ fontFamily: 'Cormorant Garamond, serif' }}>{t('experience.title')}</h3>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 place-items-center">
               {[
-                { key: 'contact',    img: 'contact-impro',        label: t('experience.activities.contact') },
-                { key: 'sacred',     img: 'sacred-connections',   label: t('experience.activities.sacred') },
-                { key: 'breath',     img: 'breathwork',           label: t('experience.activities.breath') },
-                { key: 'mens',       img: 'mens-circle',          label: t('experience.activities.mens') },
-                { key: 'improv',     img: 'improv-theatre',       label: t('experience.activities.improv') },
-                { key: 'playfights', img: 'conscious-playfights', label: t('experience.activities.playfights') },
-              ].map(({ key, img, label }) => (
-                <div key={key} className="group flex flex-col items-center cursor-pointer">
+                { key: 'contact',    img: 'contact-impro',        label: t('experience.activities.contact'),    onClick: undefined },
+                { key: 'sacred',     img: 'sacred-connections',   label: t('experience.activities.sacred'),     onClick: () => navigate('/sacred-connections') },
+                { key: 'breath',     img: 'breathwork',           label: t('experience.activities.breath'),     onClick: () => setVideoOpen(true) },
+                { key: 'mens',       img: 'mens-circle',          label: t('experience.activities.mens'),       onClick: undefined },
+                { key: 'improv',     img: 'improv-theatre',       label: t('experience.activities.improv'),     onClick: () => setActiveActivity(activities.improv) },
+                { key: 'playfights', img: 'conscious-playfights', label: t('experience.activities.playfights'), onClick: () => setActiveActivity(activities.playfights) },
+              ].map(({ key, img, label, onClick }) => (
+                <div key={key} onClick={onClick} className={`group flex flex-col items-center ${onClick ? 'cursor-pointer' : 'cursor-default'}`}>
                   <div className="relative w-32 h-32 sm:w-44 sm:h-44 md:w-52 md:h-52">
                     <img
                       src={`/activities/${img}.png`}
