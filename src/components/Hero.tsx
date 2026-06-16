@@ -36,7 +36,10 @@ const Hero = ({ onCalendarOpen }: Props) => {
           >
             {t('hero.calendar')}
           </button>
-          <button className="text-white border-b-2 border-white/50 hover:border-white transition-all pb-1 text-lg font-medium">
+          <button
+            onClick={() => document.getElementById('activities')?.scrollIntoView({ behavior: 'smooth' })}
+            className="text-white border-b-2 border-white/50 hover:border-white transition-all pb-1 text-lg font-medium"
+          >
             {t('hero.discover')}
           </button>
         </div>

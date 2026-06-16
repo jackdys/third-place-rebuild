@@ -125,7 +125,7 @@ function App() {
         </section>
 
         {/* 3. Activities */}
-        <section className="py-32 px-6 bg-tp-black/50 border-y border-white/5">
+        <section id="activities" className="py-32 px-6 bg-tp-black/50 border-y border-white/5">
           <div className="max-w-6xl mx-auto">
             <h3 className="text-4xl font-bold text-white text-center mb-20">{t('experience.title')}</h3>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 place-items-center">
