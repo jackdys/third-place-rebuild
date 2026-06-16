@@ -18,7 +18,7 @@ const resources = {
         discover: "Discover Activities"
       },
       intro: {
-        title1: "Your Community in Malaga centered around",
+        title1: "Your Bilingual Community in Malaga centered around",
         title2: "movement, body-awareness, creativity, connection and Laughter.",
         join: "Join us for an event today 🙂",
         p1: "Connect with like-minded individuals passionate about community, conscious living, movement, body-awareness, creativity, connection and Laughter.",
@@ -38,6 +38,8 @@ const resources = {
           playfights: "Conscious Playfights"
         }
       },
+      joinToday: "Join us today!",
+      whatsappMessage: "Hi! My name is [Name], I'm [Age] years old. I'm interested in joining Third Place Málaga 👋 Activities I'm interested in: [Activity]",
       footer: {
         about: "About",
         team: "The Team",
@@ -65,7 +67,7 @@ const resources = {
         discover: "Descubre Actividades"
       },
       intro: {
-        title1: "Una comunidad en Málaga centrada en",
+        title1: "Tu comunidad bilingüe en Málaga centrada en",
         title2: "el movimiento, la conciencia corporal, la creatividad, la conexión y la risa.",
         join: "Únete a un evento hoy 🙂",
         p1: "Conecta con personas afines apasionadas por la comunidad, la vida consciente, el movimiento, la conciencia corporal, la creatividad, la conexión y la risa.",
@@ -85,6 +87,8 @@ const resources = {
           playfights: "Lucha Consciente"
         }
       },
+      joinToday: "¡Únete hoy!",
+      whatsappMessage: "¡Hola! Me llamo [Nombre], tengo [Edad] años. Me interesa unirme a Third Place Málaga 👋 Actividades que me interesan: [Actividad]",
       footer: {
         about: "Sobre Nosotros",
         team: "El Equipo",

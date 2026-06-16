@@ -28,7 +28,7 @@ const CalendarModal = ({ onClose }: Props) => {
 
       {/* Modal */}
       <div
-        className="relative w-full max-w-5xl h-[80vh] bg-tp-black border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col"
+        className="relative w-full max-w-5xl h-[95dvh] md:h-[80vh] bg-tp-black border border-white/10 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl flex flex-col"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}

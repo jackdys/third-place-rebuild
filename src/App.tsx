@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Inspector } from 'react-dev-inspector'
+import { FaWhatsapp, FaInstagram, FaFacebook, FaMeetup } from 'react-icons/fa'
+import { SiGmail } from 'react-icons/si'
 import Hero from './components/Hero'
 import CalendarModal from './components/CalendarModal'
 
@@ -136,7 +138,7 @@ function App() {
                 { key: 'playfights', img: 'conscious-playfights', label: t('experience.activities.playfights') },
               ].map(({ key, img, label }) => (
                 <div key={key} className="group flex flex-col items-center cursor-pointer">
-                  <div className="relative w-44 h-44 md:w-52 md:h-52">
+                  <div className="relative w-32 h-32 sm:w-44 sm:h-44 md:w-52 md:h-52">
                     <img
                       src={`/activities/${img}.png`}
                       alt={label}
@@ -163,7 +165,7 @@ function App() {
 
       {/* Footer */}
       <footer className="bg-tp-black pt-32 pb-16 px-8 border-t border-white/10">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-16 mb-20">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 mb-20">
           {/* About Section */}
           <div>
             <h5 className="font-bold text-tp-orange text-xl mb-8 uppercase tracking-widest">{t('footer.about')}</h5>
@@ -174,25 +176,26 @@ function App() {
             </ul>
           </div>
 
-          {/* Activities Section */}
-          <div>
-            <h5 className="font-bold text-tp-orange text-xl mb-8 uppercase tracking-widest">{t('footer.activities')}</h5>
-            <ul className="text-tp-cream/70 space-y-3 text-lg">
-              <li className="hover:text-tp-orange cursor-pointer transition-colors">{t('experience.activities.contact')}</li>
-              <li className="hover:text-tp-orange cursor-pointer transition-colors">{t('experience.activities.sacred')}</li>
-              <li className="hover:text-tp-orange cursor-pointer transition-colors">{t('experience.activities.mens')}</li>
-              <li className="hover:text-tp-orange cursor-pointer transition-colors">{t('experience.activities.improv')}</li>
-            </ul>
-          </div>
 
           {/* Social & Contact */}
           <div>
             <h5 className="font-bold text-tp-orange text-xl mb-8 uppercase tracking-widest">{t('footer.connect')}</h5>
-            <div className="grid grid-cols-2 gap-4">
-              <a href="mailto:thirdplacemalaga@gmail.com" className="bg-white/5 p-4 rounded-xl text-center hover:bg-tp-green transition-all">{t('footer.mail')}</a>
-              <a href="https://wa.me/34624319964" className="bg-white/5 p-4 rounded-xl text-center hover:bg-tp-green transition-all">WhatsApp</a>
-              <a href="https://www.instagram.com/thirdplacemalaga/" className="bg-white/5 p-4 rounded-xl text-center hover:bg-tp-green transition-all">Instagram</a>
-              <a href="https://www.meetup.com/thirdplacemalaga/" className="bg-white/5 p-4 rounded-xl text-center hover:bg-tp-green transition-all">Meetup</a>
+            <div className="flex flex-wrap gap-4">
+              <a href="mailto:thirdplacemalaga@gmail.com" aria-label="Gmail" className="group w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-[#EA4335]/40 hover:bg-[#EA4335] hover:border-[#EA4335] transition-all duration-300 hover:scale-110">
+                <SiGmail className="w-6 h-6 text-[#EA4335] group-hover:text-white transition-colors" />
+              </a>
+              <a href={`https://wa.me/34624319964?text=${encodeURIComponent(t('whatsappMessage'))}`} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="group w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-[#25D366]/40 hover:bg-[#25D366] hover:border-[#25D366] transition-all duration-300 hover:scale-110">
+                <FaWhatsapp className="w-6 h-6 text-[#25D366] group-hover:text-white transition-colors" />
+              </a>
+              <a href="https://www.instagram.com/thirdplacemalaga/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="group w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-[#E1306C]/40 hover:bg-[#E1306C] hover:border-[#E1306C] transition-all duration-300 hover:scale-110">
+                <FaInstagram className="w-6 h-6 text-[#E1306C] group-hover:text-white transition-colors" />
+              </a>
+              <a href="https://www.facebook.com/thirdplacemalaga" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="group w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-[#1877F2]/40 hover:bg-[#1877F2] hover:border-[#1877F2] transition-all duration-300 hover:scale-110">
+                <FaFacebook className="w-6 h-6 text-[#1877F2] group-hover:text-white transition-colors" />
+              </a>
+              <a href="https://www.meetup.com/thirdplacemalaga/" target="_blank" rel="noopener noreferrer" aria-label="Meetup" className="group w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-[#ED1C40]/40 hover:bg-[#ED1C40] hover:border-[#ED1C40] transition-all duration-300 hover:scale-110">
+                <FaMeetup className="w-6 h-6 text-[#ED1C40] group-hover:text-white transition-colors" />
+              </a>
             </div>
           </div>
         </div>
@@ -214,7 +217,9 @@ function App() {
           </div>
           <div className="text-tp-cream/80 text-lg leading-relaxed text-center">
             <p className="font-bold text-white italic">Espacio Bohemia Málaga</p>
-            <p>Calle Leopoldo Alas Clarín 3, Málaga, Spain</p>
+            <p>Calle Leopoldo Alas Clarín 3,</p>
+            <p>planta baja, Local D (a la derecha del No. 3),</p>
+            <p>Málaga</p>
           </div>
         </div>
 
@@ -238,15 +243,15 @@ function App() {
 
     {/* WhatsApp Floating Button */}
     <a
-      href="https://wa.me/34624319964"
+      href={`https://wa.me/34624319964?text=${encodeURIComponent(t('whatsappMessage'))}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Join today on WhatsApp"
-      className="fixed bottom-6 right-6 z-[150] flex items-center gap-3 bg-[#25D366] text-white pl-5 pr-4 py-3 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-transform"
+      className="fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-4 md:right-6 z-[150] flex items-center gap-3 bg-[#25D366] text-white pl-4 md:pl-5 pr-3 md:pr-4 py-3 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-transform"
     >
       {/* Pulse ring */}
       <span className="absolute inset-0 rounded-full bg-[#25D366] wa-pulse" />
-      <span className="relative z-10 font-bold text-sm tracking-wide whitespace-nowrap">Join today</span>
+      <span className="relative z-10 font-bold text-sm tracking-wide whitespace-nowrap">{t('joinToday')}</span>
       <svg viewBox="0 0 32 32" className="w-7 h-7 relative z-10 shrink-0" fill="white" xmlns="http://www.w3.org/2000/svg">
         <path d="M16 2C8.268 2 2 8.268 2 16c0 2.478.675 4.797 1.85 6.787L2 30l7.447-1.824A13.94 13.94 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.44 11.44 0 0 1-5.826-1.594l-.418-.248-4.42 1.082 1.112-4.305-.272-.44A11.46 11.46 0 0 1 4.5 16C4.5 9.649 9.649 4.5 16 4.5S27.5 9.649 27.5 16 22.351 27.5 16 27.5zm6.29-8.61c-.344-.172-2.036-1.004-2.352-1.118-.316-.115-.546-.172-.776.172-.23.344-.892 1.118-1.094 1.348-.201.23-.403.259-.747.086-.344-.172-1.453-.536-2.767-1.709-1.022-.912-1.712-2.038-1.913-2.382-.2-.344-.021-.53.151-.701.155-.155.344-.403.516-.604.172-.2.23-.344.344-.574.115-.23.058-.43-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.564-.582-.776-.593l-.66-.011c-.23 0-.603.086-.918.43s-1.207 1.18-1.207 2.877 1.235 3.337 1.407 3.567c.172.23 2.43 3.71 5.888 5.203.823.355 1.465.567 1.965.726.826.263 1.578.226 2.172.137.663-.099 2.036-.832 2.323-1.635.287-.803.287-1.491.2-1.635-.085-.143-.315-.23-.66-.402z"/>
       </svg>
