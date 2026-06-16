@@ -32,7 +32,7 @@ function App() {
           <img src="/logo.png" alt="Third Place Málaga Logo" className="h-10 md:h-12 w-auto" />
         </div>
         <div className="hidden lg:flex gap-6 text-tp-cream font-semibold text-xs uppercase tracking-[0.2em] items-center">
-          <a href="#" className="hover:text-tp-orange transition-colors">{t('nav.home')}</a>
+          <a href="/" className="hover:text-tp-orange transition-colors">{t('nav.home')}</a>
           <a href="#" className="hover:text-tp-orange transition-colors">{t('nav.activities')}</a>
           <button onClick={() => setCalendarOpen(true)} className="hover:text-tp-orange transition-colors">{t('nav.calendar')}</button>
           
@@ -62,9 +62,7 @@ function App() {
               <span className={i18n.language === 'es' ? 'font-bold text-tp-orange' : 'opacity-70'}>ES</span>
             </button>
         </div>
-        <a href="https://wa.me/34624319964" target="_blank" rel="noopener noreferrer" className="hidden lg:inline-block bg-tp-green text-white px-6 py-2 rounded-full text-xs font-bold hover:bg-tp-orange transition-all tracking-widest">
-          {t('nav.whatsapp')}
-        </a>
+
       </nav>
 
       <div id="main-content">
@@ -204,7 +202,7 @@ function App() {
           <h5 className="font-bold text-tp-orange text-xl mb-8 uppercase tracking-widest">{t('footer.visit')}</h5>
           <div className="rounded-3xl overflow-hidden border border-white/10 h-[500px] mb-8 shadow-2xl">
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3198.544520935574!2d-4.432269!3d36.707175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f796122d2645%3A0x6c79a83689c169fd!2sEspacio%20Bohemia!5e0!3m2!1sen!2ses!4v1718536000000!5m2!1sen!2ses" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3200!2d-4.433879!3d36.7072371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f7d4dc7e884b%3A0x6c79b830dd8529fd!2sEspacio%20Bohemia%20M%C3%A1laga!5e0!3m2!1sen!2ses!4v1718536000000!5m2!1sen!2ses" 
               width="100%" 
               height="100%" 
               style={{ border: 0 }} 
@@ -237,6 +235,22 @@ function App() {
         </div>
       </footer>
     </main>
+
+    {/* WhatsApp Floating Button */}
+    <a
+      href="https://wa.me/34624319964"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Join today on WhatsApp"
+      className="fixed bottom-6 right-6 z-[150] flex items-center gap-3 bg-[#25D366] text-white pl-5 pr-4 py-3 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-transform"
+    >
+      {/* Pulse ring */}
+      <span className="absolute inset-0 rounded-full bg-[#25D366] wa-pulse" />
+      <span className="relative z-10 font-bold text-sm tracking-wide whitespace-nowrap">Join today</span>
+      <svg viewBox="0 0 32 32" className="w-7 h-7 relative z-10 shrink-0" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 2C8.268 2 2 8.268 2 16c0 2.478.675 4.797 1.85 6.787L2 30l7.447-1.824A13.94 13.94 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.44 11.44 0 0 1-5.826-1.594l-.418-.248-4.42 1.082 1.112-4.305-.272-.44A11.46 11.46 0 0 1 4.5 16C4.5 9.649 9.649 4.5 16 4.5S27.5 9.649 27.5 16 22.351 27.5 16 27.5zm6.29-8.61c-.344-.172-2.036-1.004-2.352-1.118-.316-.115-.546-.172-.776.172-.23.344-.892 1.118-1.094 1.348-.201.23-.403.259-.747.086-.344-.172-1.453-.536-2.767-1.709-1.022-.912-1.712-2.038-1.913-2.382-.2-.344-.021-.53.151-.701.155-.155.344-.403.516-.604.172-.2.23-.344.344-.574.115-.23.058-.43-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.564-.582-.776-.593l-.66-.011c-.23 0-.603.086-.918.43s-1.207 1.18-1.207 2.877 1.235 3.337 1.407 3.567c.172.23 2.43 3.71 5.888 5.203.823.355 1.465.567 1.965.726.826.263 1.578.226 2.172.137.663-.099 2.036-.832 2.323-1.635.287-.803.287-1.491.2-1.635-.085-.143-.315-.23-.66-.402z"/>
+      </svg>
+    </a>
     </>
   )
 }
