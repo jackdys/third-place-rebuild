@@ -1,9 +1,12 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Inspector } from 'react-dev-inspector'
 import Hero from './components/Hero'
+import CalendarModal from './components/CalendarModal'
 
 function App() {
   const { t, i18n } = useTranslation();
+  const [calendarOpen, setCalendarOpen] = useState(false);
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'es' : 'en';
@@ -13,6 +16,7 @@ function App() {
   return (
     <>
     <Inspector />
+    {calendarOpen && <CalendarModal onClose={() => setCalendarOpen(false)} />}
     <main className="min-h-screen font-body selection:bg-tp-orange selection:text-tp-black overflow-x-hidden">
       {/* Skip Link for Accessibility */}
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:bg-tp-orange focus:text-white focus:p-4">
@@ -30,7 +34,7 @@ function App() {
         <div className="hidden lg:flex gap-6 text-tp-cream font-semibold text-xs uppercase tracking-[0.2em] items-center">
           <a href="#" className="hover:text-tp-orange transition-colors">{t('nav.home')}</a>
           <a href="#" className="hover:text-tp-orange transition-colors">{t('nav.activities')}</a>
-          <a href="https://thirdplacemalaga.com/calendar" className="hover:text-tp-orange transition-colors">{t('nav.calendar')}</a>
+          <button onClick={() => setCalendarOpen(true)} className="hover:text-tp-orange transition-colors">{t('nav.calendar')}</button>
           
           {/* Language Toggle */}
           <button 
@@ -42,8 +46,14 @@ function App() {
             <span className={i18n.language === 'es' ? 'font-bold text-tp-orange' : 'opacity-70'}>ES</span>
           </button>
         </div>
-        <div className="flex items-center gap-4 lg:hidden">
-            <button 
+        <div className="flex items-center gap-3 lg:hidden">
+            <button
+              onClick={() => setCalendarOpen(true)}
+              className="bg-tp-orange text-white px-4 py-1.5 rounded-full text-xs font-bold hover:bg-tp-green transition-all tracking-widest"
+            >
+              {t('nav.calendar')}
+            </button>
+            <button
               onClick={toggleLanguage}
               className="flex items-center gap-1 bg-white/5 px-3 py-1.5 rounded-full border border-white/10 text-xs"
             >
@@ -59,7 +69,7 @@ function App() {
 
       <div id="main-content">
         {/* 1. Hero Section */}
-        <Hero />
+        <Hero onCalendarOpen={() => setCalendarOpen(true)} />
 
         {/* 2. Main Intro */}
         <section className="relative py-32 px-6 bg-tp-black overflow-hidden">
@@ -96,19 +106,19 @@ function App() {
             
             {/* CTA */}
             <div className="mt-20 flex flex-col items-center">
-              <a 
-                href="https://thirdplacemalaga.com/calendar"
-                className="inline-block bg-tp-orange text-tp-black px-12 py-5 rounded-full text-xl font-bold hover:bg-white transition-all shadow-2xl hover:scale-105 active:scale-95 tracking-wide"
+              <button
+                onClick={() => setCalendarOpen(true)}
+                className="bg-tp-orange text-tp-black px-12 py-5 rounded-full text-xl font-bold hover:bg-white transition-all shadow-2xl hover:scale-105 active:scale-95 tracking-wide"
               >
                 {t('intro.join')}
-              </a>
+              </button>
               <div className="mt-8">
-                <a href="https://thirdplacemalaga.com/calendar" className="text-tp-orange/80 hover:text-tp-orange hover:underline underline-offset-8 decoration-2 transition-all font-medium flex items-center gap-2">
+                <button onClick={() => setCalendarOpen(true)} className="text-tp-orange/80 hover:text-tp-orange hover:underline underline-offset-8 decoration-2 transition-all font-medium flex items-center gap-2">
                   <span>{t('intro.checkCalendar')}</span>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                   </svg>
-                </a>
+                </button>
               </div>
             </div>
           </div>
