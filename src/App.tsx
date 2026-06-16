@@ -114,22 +114,38 @@ function App() {
           </div>
         </section>
 
-        {/* 3. Placeholder for Activities */}
+        {/* 3. Activities */}
         <section className="py-32 px-6 bg-tp-black/50 border-y border-white/5">
           <div className="max-w-6xl mx-auto">
             <h3 className="text-4xl font-bold text-white text-center mb-20">{t('experience.title')}</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 place-items-center">
               {[
-                t('experience.activities.contact'), 
-                t('experience.activities.sacred'), 
-                t('experience.activities.breath'), 
-                t('experience.activities.mens'), 
-                t('experience.activities.improv'), 
-                t('experience.activities.playfights')
-              ].map((activity) => (
-                <div key={activity} className="group p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-tp-orange/50 transition-all cursor-pointer">
-                  <h4 className="text-2xl font-bold text-white mb-4 group-hover:text-tp-orange transition-colors">{activity}</h4>
-                  <p className="text-tp-cream/40 uppercase tracking-widest text-xs font-bold">{t('experience.discover')}</p>
+                { key: 'contact',    img: 'contact-impro',        label: t('experience.activities.contact') },
+                { key: 'sacred',     img: 'sacred-connections',   label: t('experience.activities.sacred') },
+                { key: 'breath',     img: 'breathwork',           label: t('experience.activities.breath') },
+                { key: 'mens',       img: 'mens-circle',          label: t('experience.activities.mens') },
+                { key: 'improv',     img: 'improv-theatre',       label: t('experience.activities.improv') },
+                { key: 'playfights', img: 'conscious-playfights', label: t('experience.activities.playfights') },
+              ].map(({ key, img, label }) => (
+                <div key={key} className="group flex flex-col items-center cursor-pointer">
+                  <div className="relative w-44 h-44 md:w-52 md:h-52">
+                    <img
+                      src={`/activities/${img}.png`}
+                      alt={label}
+                      className="w-full h-full object-cover rounded-full transition-transform duration-500 group-hover:scale-105"
+                      style={{ filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.7))' }}
+                    />
+                  </div>
+                  <svg viewBox="0 0 260 80" className="w-full max-w-[260px]">
+                    <defs>
+                      <path id={`arc-${key}`} d="M 15,4 Q 130,90 245,4" />
+                    </defs>
+                    <text fill="white" fontSize="18" fontWeight="800" letterSpacing="1">
+                      <textPath href={`#arc-${key}`} startOffset="50%" textAnchor="middle">
+                        {label}
+                      </textPath>
+                    </text>
+                  </svg>
                 </div>
               ))}
             </div>
