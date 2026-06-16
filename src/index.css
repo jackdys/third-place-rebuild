@@ -120,3 +120,19 @@ body {
   border-top: 14px solid #25D366;
   border-right: 13px solid transparent;
 }
+
+/* Fireflies around the logo */
+@keyframes firefly-rise {
+  0%   { opacity: 0; transform: translate(0, 0) scale(0.6); }
+  20%  { opacity: 1; }
+  60%  { opacity: 0.7; transform: translate(var(--ff-x, 18px), var(--ff-y, -22px)) scale(1); }
+  85%  { opacity: 0; }
+  100% { opacity: 0; transform: translate(0, 0) scale(0.6); }
+}
+
+.firefly {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: firefly-rise var(--ff-dur, 8s) ease-in-out var(--ff-delay, 0s) infinite;
+}
