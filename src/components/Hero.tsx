@@ -102,7 +102,7 @@ const Hero = ({ onCalendarOpen }: Props) => {
   const { t } = useTranslation()
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative flex items-center justify-center overflow-hidden snap-start" style={{ height: '100dvh' }}>
       {/* Background */}
       <div className="absolute inset-0 z-0">
         <img
@@ -157,7 +157,7 @@ const Hero = ({ onCalendarOpen }: Props) => {
       {/* Content */}
       <div className="relative text-center px-4 max-w-5xl" style={{ zIndex: 2 }}>
         <h2
-          className="text-2xl md:text-3xl text-white font-light italic mb-4 drop-shadow-lg opacity-90"
+          className="text-lg md:text-3xl text-white font-light italic mb-2 md:mb-4 drop-shadow-lg opacity-90"
           style={{ fontFamily: 'Cormorant Garamond, serif' }}
         >
           {t('hero.subtitle')}
@@ -166,21 +166,30 @@ const Hero = ({ onCalendarOpen }: Props) => {
         <img
           src="/ThirdPlace-Logo.png"
           alt="Third Place Málaga Logo"
-          className="logo-breathe w-full max-w-lg md:max-w-2xl mx-auto mb-8 opacity-90 saturate-50 contrast-125 hover:opacity-100 hover:saturate-100"
+          className="logo-breathe w-auto mx-auto mb-4 md:mb-8 opacity-90 saturate-50 contrast-125 hover:opacity-100 hover:saturate-100"
+          style={{ maxHeight: '45vh', maxWidth: 'min(90vw, 36rem)' }}
         />
 
-        <div className="mt-12 flex flex-col md:flex-row gap-6 justify-center items-center">
+        <div className="mt-6 md:mt-12 flex flex-col md:flex-row gap-4 md:gap-6 justify-center items-center">
           <button
             onClick={onCalendarOpen}
-            className="bg-[#c49a68] text-white px-10 py-4 rounded-lg text-xl font-bold border-[3px] border-white/50 hover:bg-white hover:text-[#c49a68] hover:border-white transition-all shadow-xl hover:scale-105 active:scale-95"
+            className="group relative px-8 py-3 md:px-10 md:py-4 rounded-lg border-2 border-white/70 text-white bg-white/10 hover:bg-white/20 hover:border-white transition-all duration-300 hover:scale-105 active:scale-95 backdrop-blur-sm hover:shadow-[0_0_40px_rgba(255,255,255,0.18)]"
+            style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.3rem', letterSpacing: '0.06em' }}
           >
-            {t('hero.calendar')}
+            <span className="italic">{t('hero.calendar')}</span>
           </button>
           <button
             onClick={() => document.getElementById('activities')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-white border-b-2 border-white/50 hover:border-white transition-all pb-1 text-lg font-medium"
+            className="group relative text-white/80 hover:text-white transition-colors duration-300 uppercase flex items-center gap-2"
+            style={{ letterSpacing: '0.18em', fontSize: '0.85rem' }}
           >
-            {t('hero.discover')}
+            <span className="relative pb-0.5">
+              {t('hero.discover')}
+              <span className="absolute bottom-0 left-0 w-0 h-px bg-white group-hover:w-full transition-all duration-500 ease-out" />
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 -translate-y-1 group-hover:translate-y-0 transition-all duration-300">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
+            </svg>
           </button>
         </div>
       </div>

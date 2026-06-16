@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Inspector } from 'react-dev-inspector'
@@ -16,6 +16,16 @@ function App() {
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [videoOpen, setVideoOpen] = useState(false);
   const [activeActivity, setActiveActivity] = useState<ActivityData | null>(null);
+  const [showWA, setShowWA] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const onScroll = () => setShowWA(el.scrollTop > window.innerHeight * 0.85);
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => el.removeEventListener('scroll', onScroll);
+  }, []);
 
   const activities: Record<string, ActivityData> = {
     sacred: {
@@ -118,7 +128,8 @@ function App() {
     {calendarOpen && <CalendarModal onClose={() => setCalendarOpen(false)} />}
     {videoOpen && <VideoModal src="/activities/breathwork-video.mp4" onClose={() => setVideoOpen(false)} onCalendarOpen={() => { setVideoOpen(false); setCalendarOpen(true) }} />}
     {activeActivity && <ActivityModal data={activeActivity} onClose={() => setActiveActivity(null)} onCalendarOpen={() => { setActiveActivity(null); setCalendarOpen(true) }} />}
-    <main className="min-h-screen font-body selection:bg-tp-orange selection:text-tp-black overflow-x-hidden">
+    <div ref={scrollRef} className="overflow-y-scroll overflow-x-hidden" style={{ height: '100dvh', scrollSnapType: 'y mandatory', overscrollBehavior: 'contain' }}>
+    <main className="min-h-screen font-body selection:bg-tp-orange selection:text-tp-black">
       {/* Skip Link for Accessibility */}
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:bg-tp-orange focus:text-white focus:p-4">
         Skip to content
@@ -170,71 +181,57 @@ function App() {
         {/* 1. Hero Section */}
         <Hero onCalendarOpen={() => setCalendarOpen(true)} />
 
-        {/* 2. Main Intro */}
-        <section className="relative py-32 px-6 bg-tp-black overflow-hidden -mt-2">
-          {/* Ambient Glows */}
+        {/* 2. Intro — Title + Values */}
+        <section
+          className="snap-start relative px-6 overflow-hidden flex items-center justify-center"
+          style={{ height: '100dvh', backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.82) 50%, rgba(0,0,0,0.88) 100%), url(/malaga-bg.png)', backgroundSize: 'cover', backgroundPosition: 'top center' }}
+        >
           <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-tp-green/10 rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/3 pointer-events-none" />
           <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-tp-orange/10 rounded-full blur-[100px] translate-x-1/4 -translate-y-1/4 pointer-events-none" />
 
-          <div className="relative max-w-5xl mx-auto">
-            {/* Header */}
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
-                {t('intro.title1')}
-              </h2>
-              <p className="text-tp-cream/40 text-xs md:text-sm uppercase tracking-[0.4em] mb-6">{t('intro.centeredAround')}</p>
-              <ValuesReveal values={t('intro.values')} />
+          <div className="relative max-w-5xl mx-auto text-center pt-16">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+              {t('intro.title1')}
+            </h2>
+            <p className="text-tp-cream/40 text-xs md:text-sm uppercase tracking-[0.4em] mb-6">{t('intro.centeredAround')}</p>
+            <ValuesReveal values={t('intro.values')} />
+          </div>
+        </section>
+
+        {/* 3. Intro — Body Copy */}
+        <section
+          className="snap-start relative px-6 overflow-hidden flex items-center justify-center"
+          style={{ height: '100dvh', backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.72) 50%, rgba(0,0,0,0.88) 100%), url(/malaga-bg.png)', backgroundSize: 'cover', backgroundPosition: 'top center' }}
+        >
+          <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-tp-green/10 rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/3 pointer-events-none" />
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-tp-orange/10 rounded-full blur-[100px] translate-x-1/4 -translate-y-1/4 pointer-events-none" />
+
+          <div className="relative max-w-5xl mx-auto flex flex-col items-center text-center pt-16 overflow-y-auto">
+            <div className="flex flex-col items-center mb-8">
+              <div className="w-px h-10 bg-gradient-to-b from-transparent to-tp-orange" />
+              <div className="w-2 h-2 rounded-full bg-tp-orange mt-1" />
             </div>
 
-            {/* Content Card */}
-            <div className="relative flex flex-col items-center text-center py-8 md:py-12">
-
-              {/* Top teal vertical accent */}
-              <div className="flex flex-col items-center mb-8">
-                <div className="w-px h-10 bg-gradient-to-b from-transparent to-tp-orange" />
-                <div className="w-2 h-2 rounded-full bg-tp-orange mt-1" />
-              </div>
-
-              <div className="space-y-6 text-2xl md:text-4xl text-white/90 leading-snug italic max-w-2xl"
-                   style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+            <div className="backdrop-blur-sm bg-black/40 border border-white/10 rounded-3xl px-6 py-8 md:px-8 md:py-10 max-w-2xl">
+              <div className="space-y-4 md:space-y-6 text-xl md:text-4xl text-white/95 leading-snug italic" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
                 {t('intro.p2').split('! ').map((part, i, arr) => (
                   <p key={i}>{part}{i < arr.length - 1 ? '!' : ''}</p>
                 ))}
               </div>
-
-              {/* Bottom teal vertical accent */}
-              <div className="flex flex-col items-center mt-8">
-                <div className="w-2 h-2 rounded-full bg-tp-orange" />
-                <div className="w-px h-10 bg-gradient-to-b from-tp-orange to-transparent mt-1" />
-              </div>
-
             </div>
-            
-            {/* CTA */}
-            <div className="mt-20 flex flex-col items-center">
-              <button
-                onClick={() => setCalendarOpen(true)}
-                className="bg-tp-orange text-tp-black px-12 py-5 rounded-lg text-xl font-bold hover:bg-white transition-all shadow-2xl hover:scale-105 active:scale-95 tracking-wide"
-              >
-                {t('intro.join')}
-              </button>
-              <div className="mt-8">
-                <button onClick={() => setCalendarOpen(true)} className="text-tp-orange/80 hover:text-white hover:underline underline-offset-8 decoration-2 transition-all font-medium flex items-center gap-2">
-                  <span>{t('intro.checkCalendar')}</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                  </svg>
-                </button>
-              </div>
+
+            <div className="flex flex-col items-center mt-8">
+              <div className="w-2 h-2 rounded-full bg-tp-orange" />
+              <div className="w-px h-10 bg-gradient-to-b from-tp-orange to-transparent mt-1" />
             </div>
           </div>
         </section>
 
-        {/* 3. Activities */}
-        <section id="activities" className="py-32 px-6 bg-tp-black/50 border-y border-white/5">
+        {/* 4. Activities */}
+        <section id="activities" className="snap-start min-h-screen py-10 md:py-20 px-6 bg-tp-black/50 border-y border-white/5 flex flex-col justify-center">
           <div className="max-w-6xl mx-auto">
-            <h3 className="text-4xl font-bold text-white text-center mb-20" style={{ fontFamily: 'Cormorant Garamond, serif' }}>{t('experience.title')}</h3>
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 place-items-center">
+            <h3 className="text-3xl md:text-4xl font-bold text-white text-center mb-10 md:mb-20" style={{ fontFamily: 'Cormorant Garamond, serif' }}>{t('experience.title')}</h3>
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 md:gap-x-8 md:gap-y-16 place-items-center">
               {[
                 { key: 'contact',    img: 'contact-impro',        label: t('experience.activities.contact'),    onClick: undefined },
                 { key: 'sacred',     img: 'sacred-connections',   label: t('experience.activities.sacred'),     onClick: () => navigate('/sacred-connections') },
@@ -244,7 +241,7 @@ function App() {
                 { key: 'playfights', img: 'conscious-playfights', label: t('experience.activities.playfights'), onClick: () => setActiveActivity(activities.playfights) },
               ].map(({ key, img, label, onClick }) => (
                 <div key={key} onClick={onClick} className={`group flex flex-col items-center ${onClick ? 'cursor-pointer' : 'cursor-default'}`}>
-                  <div className="relative w-32 h-32 sm:w-44 sm:h-44 md:w-52 md:h-52">
+                  <div className="relative w-24 h-24 sm:w-36 sm:h-36 md:w-52 md:h-52">
                     <img
                       src={`/activities/${img}.png`}
                       alt={label}
@@ -252,7 +249,7 @@ function App() {
                       style={{ filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.7))' }}
                     />
                   </div>
-                  <svg viewBox="0 0 260 80" className="w-full max-w-[260px]">
+                  <svg viewBox="0 0 260 80" className="w-full max-w-[180px] md:max-w-[260px]">
                     <defs>
                       <path id={`arc-${key}`} d="M 15,4 Q 130,90 245,4" />
                     </defs>
@@ -269,13 +266,11 @@ function App() {
         </section>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-tp-black pt-32 pb-16 px-8 border-t border-white/10">
-
-        {/* Map Section */}
-        <div className="max-w-6xl mx-auto mb-20">
+      {/* 5. Map */}
+      <section className="snap-start min-h-screen bg-tp-black pt-24 pb-16 px-8 border-t border-white/10 flex flex-col justify-center">
+        <div className="max-w-6xl mx-auto w-full">
           <h5 className="font-bold text-tp-orange text-xl mb-8 uppercase tracking-widest">{t('footer.visit')}</h5>
-          <div className="rounded-3xl overflow-hidden border border-white/10 h-[300px] md:h-[500px] mb-8 shadow-2xl">
+          <div className="rounded-3xl overflow-hidden border border-white/10 h-[300px] md:h-[460px] mb-8 shadow-2xl">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3200!2d-4.433879!3d36.7072371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f7d4dc7e884b%3A0x6c79b830dd8529fd!2sEspacio%20Bohemia%20M%C3%A1laga!5e0!3m2!1sen!2ses!4v1718536000000!5m2!1sen!2ses"
               width="100%"
@@ -294,6 +289,10 @@ function App() {
             <p>Málaga</p>
           </div>
         </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-tp-black pt-20 pb-16 px-8 border-t border-white/5">
 
         {/* About + Connect */}
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 mb-20">
@@ -337,6 +336,7 @@ function App() {
         </div>
       </footer>
     </main>
+    </div>
 
     {/* WhatsApp Floating Button */}
     <a
@@ -344,7 +344,7 @@ function App() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Join today on WhatsApp"
-      className="wa-flicker fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-4 md:right-6 z-[150] flex items-center gap-3 bg-[#25D366] text-white px-4 md:px-5 py-3 rounded-lg shadow-lg hover:scale-105 active:scale-95 transition-transform"
+      className={`wa-flicker fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-4 md:right-6 z-[150] flex items-center gap-3 bg-[#25D366] text-white px-4 md:px-5 py-3 rounded-lg shadow-lg hover:scale-105 active:scale-95 transition-all duration-500 ${showWA ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none translate-y-4'}`}
     >
       <span className="font-bold text-sm tracking-wide whitespace-nowrap">{t('joinToday')}</span>
       <FaWhatsapp className="w-6 h-6 shrink-0 text-white" />

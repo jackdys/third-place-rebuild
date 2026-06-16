@@ -22,15 +22,15 @@ const ValuesReveal = ({ values }: Props) => {
   const words = values.split(' · ')
 
   const previewColors: Record<number, string> = {
-    0: '#C49A68', // Movement — amber
-    1: '#5ECFB0', // Body Awareness — light teal
-    2: '#C49A68', // Creativity — amber
-    3: '#5ECFB0', // Connection — light teal
-    4: '#C49A68', // Playfulness — amber
+    0: '#ffffff',
+    1: '#ffffff',
+    2: '#ffffff',
+    3: '#ffffff',
+    4: '#ffffff',
   }
 
   return (
-    <p ref={ref} className="font-accent italic text-xl md:text-2xl lg:text-3xl font-light leading-relaxed">
+    <p ref={ref} className="font-accent italic font-light leading-relaxed" style={{ textShadow: '0 2px 16px rgba(0,0,0,0.9)' }}>
       {words.map((word, i) => {
         const wordDelay = i * 600
         const dotDelay = wordDelay + 400
@@ -41,7 +41,8 @@ const ValuesReveal = ({ values }: Props) => {
               className={`value-word ${triggered ? 'animate' : ''}`}
               style={{ animationDelay: `${wordDelay}ms`, color }}
             >
-              {word}
+              <span style={{ fontSize: '2rem', lineHeight: 1 }}>{word[0]}</span>
+              <span style={{ fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{word.slice(1)}</span>
             </span>
             {i < words.length - 1 && (
               <span
