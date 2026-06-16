@@ -4,26 +4,49 @@ interface Props {
   onCalendarOpen: () => void
 }
 
-// Stable firefly data — defined outside component to avoid re-computation
+// 30 fireflies spread across the full hero — positions as % of hero section
 const FIREFLIES = [
-  { size: 3, left: 8,  top: 20, x:  22, y: -18, dur: 7.2, delay: 0.0, color: '#C49A68' },
-  { size: 2, left: 18, top: 65, x: -16, y: -28, dur: 9.1, delay: 1.3, color: '#5ECFB0' },
-  { size: 4, left: 28, top: 40, x:  12, y:  20, dur: 8.4, delay: 2.7, color: '#C49A68' },
-  { size: 2, left: 38, top: 12, x: -20, y: -14, dur: 6.8, delay: 0.9, color: '#5ECFB0' },
-  { size: 3, left: 50, top: 78, x:  18, y: -22, dur: 9.6, delay: 3.5, color: '#ffffff' },
-  { size: 2, left: 62, top: 30, x: -14, y:  18, dur: 7.8, delay: 1.8, color: '#C49A68' },
-  { size: 4, left: 72, top: 55, x:  24, y: -12, dur: 8.9, delay: 4.2, color: '#5ECFB0' },
-  { size: 2, left: 82, top: 18, x: -18, y: -24, dur: 7.3, delay: 0.5, color: '#C49A68' },
-  { size: 3, left: 90, top: 70, x: -22, y:  16, dur: 9.0, delay: 2.1, color: '#ffffff' },
-  { size: 2, left: 14, top: 85, x:  14, y: -20, dur: 8.2, delay: 5.0, color: '#5ECFB0' },
-  { size: 3, left: 44, top: 50, x: -10, y: -30, dur: 7.6, delay: 3.8, color: '#C49A68' },
-  { size: 2, left: 58, top: 88, x:  20, y: -16, dur: 8.7, delay: 1.1, color: '#5ECFB0' },
-  { size: 3, left: 76, top: 8,  x: -16, y:  22, dur: 9.3, delay: 6.1, color: '#C49A68' },
-  { size: 2, left: 96, top: 42, x: -24, y: -10, dur: 7.9, delay: 4.6, color: '#ffffff' },
+  // amber cluster — left side
+  { size: 3, left:  5, top: 18, x:  18, y: -14, dur: 7.2, delay: 0.0, color: '#C49A68' },
+  { size: 2, left:  9, top: 55, x:  22, y: -20, dur: 9.4, delay: 2.8, color: '#C49A68' },
+  { size: 2, left: 12, top: 80, x:  14, y: -28, dur: 8.1, delay: 5.2, color: '#C49A68' },
+  { size: 4, left: 18, top: 35, x:  20, y:  16, dur: 9.8, delay: 1.4, color: '#C49A68' },
+  { size: 2, left: 22, top: 70, x:  16, y: -18, dur: 7.6, delay: 6.9, color: '#C49A68' },
+  // teal cluster — left-center
+  { size: 3, left: 28, top: 15, x: -12, y:  22, dur: 8.7, delay: 3.3, color: '#5ECFB0' },
+  { size: 2, left: 32, top: 60, x:  18, y: -24, dur: 9.2, delay: 0.7, color: '#5ECFB0' },
+  { size: 3, left: 36, top: 88, x: -16, y: -20, dur: 7.9, delay: 4.1, color: '#5ECFB0' },
+  // white — center, near logo
+  { size: 2, left: 40, top: 10, x:  12, y:  18, dur: 8.3, delay: 1.9, color: '#ffffff' },
+  { size: 3, left: 44, top: 45, x: -14, y: -22, dur: 9.6, delay: 7.4, color: '#ffffff' },
+  { size: 2, left: 48, top: 82, x:  20, y: -16, dur: 7.4, delay: 2.3, color: '#ffffff' },
+  { size: 4, left: 50, top: 28, x: -18, y:  24, dur: 8.8, delay: 5.8, color: '#C49A68' },
+  { size: 2, left: 52, top: 72, x:  16, y: -12, dur: 9.1, delay: 0.4, color: '#5ECFB0' },
+  // teal — right-center
+  { size: 3, left: 56, top: 18, x: -22, y:  14, dur: 7.7, delay: 3.7, color: '#5ECFB0' },
+  { size: 2, left: 60, top: 55, x:  14, y: -26, dur: 9.3, delay: 6.2, color: '#5ECFB0' },
+  { size: 3, left: 64, top: 85, x: -18, y: -18, dur: 8.5, delay: 1.1, color: '#C49A68' },
+  // amber — right side
+  { size: 2, left: 68, top: 12, x:  20, y:  20, dur: 7.3, delay: 4.5, color: '#C49A68' },
+  { size: 4, left: 72, top: 40, x: -24, y: -14, dur: 9.7, delay: 2.6, color: '#C49A68' },
+  { size: 2, left: 76, top: 68, x:  18, y: -22, dur: 8.2, delay: 7.1, color: '#ffffff' },
+  { size: 3, left: 80, top: 22, x: -16, y:  18, dur: 7.8, delay: 0.9, color: '#5ECFB0' },
+  { size: 2, left: 84, top: 78, x:  22, y: -16, dur: 9.0, delay: 5.5, color: '#C49A68' },
+  // far right
+  { size: 3, left: 88, top: 35, x: -20, y: -20, dur: 8.6, delay: 3.0, color: '#C49A68' },
+  { size: 2, left: 91, top: 60, x: -14, y:  16, dur: 7.5, delay: 6.4, color: '#5ECFB0' },
+  { size: 4, left: 94, top: 15, x: -22, y:  22, dur: 9.5, delay: 1.7, color: '#ffffff' },
+  { size: 2, left: 97, top: 82, x: -18, y: -24, dur: 8.0, delay: 4.8, color: '#C49A68' },
+  // extra scattered
+  { size: 2, left: 15, top: 48, x:  12, y: -18, dur: 7.1, delay: 8.2, color: '#ffffff' },
+  { size: 3, left: 42, top: 92, x: -10, y: -22, dur: 9.9, delay: 0.2, color: '#5ECFB0' },
+  { size: 2, left: 58, top:  5, x:  16, y:  20, dur: 8.4, delay: 3.9, color: '#C49A68' },
+  { size: 3, left: 74, top: 92, x: -20, y: -14, dur: 7.6, delay: 6.7, color: '#5ECFB0' },
+  { size: 2, left: 87, top: 50, x: -16, y: -18, dur: 9.2, delay: 2.0, color: '#ffffff' },
 ]
 
 const Hero = ({ onCalendarOpen }: Props) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -37,42 +60,42 @@ const Hero = ({ onCalendarOpen }: Props) => {
         <div className="absolute inset-0 bg-black/40" />
       </div>
 
-      <div className="relative z-10 text-center px-4 max-w-5xl">
-        <h2 className="text-2xl md:text-3xl text-white font-light italic mb-4 drop-shadow-lg opacity-90" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+      {/* Firefly layer — full hero width */}
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+        {FIREFLIES.map((ff, i) => (
+          <span
+            key={i}
+            className="firefly"
+            style={{
+              width:  ff.size,
+              height: ff.size,
+              left:   `${ff.left}%`,
+              top:    `${ff.top}%`,
+              background: ff.color,
+              boxShadow: `0 0 ${ff.size * 5}px ${ff.size * 2}px ${ff.color}70`,
+              '--ff-x':     `${ff.x}px`,
+              '--ff-y':     `${ff.y}px`,
+              '--ff-dur':   `${ff.dur}s`,
+              '--ff-delay': `${ff.delay}s`,
+            } as React.CSSProperties}
+          />
+        ))}
+      </div>
+
+      {/* Content */}
+      <div className="relative text-center px-4 max-w-5xl" style={{ zIndex: 2 }}>
+        <h2
+          className="text-2xl md:text-3xl text-white font-light italic mb-4 drop-shadow-lg opacity-90"
+          style={{ fontFamily: 'Cormorant Garamond, serif' }}
+        >
           {t('hero.subtitle')}
         </h2>
 
-        {/* Logo with fireflies */}
-        <div className="relative w-full max-w-lg md:max-w-2xl mx-auto mb-8">
-          {/* Firefly layer */}
-          <div className="absolute inset-0 overflow-visible pointer-events-none" style={{ zIndex: 1 }}>
-            {FIREFLIES.map((ff, i) => (
-              <span
-                key={i}
-                className="firefly"
-                style={{
-                  width: ff.size,
-                  height: ff.size,
-                  left: `${ff.left}%`,
-                  top: `${ff.top}%`,
-                  background: ff.color,
-                  boxShadow: `0 0 ${ff.size * 4}px ${ff.size * 2}px ${ff.color}80`,
-                  '--ff-x': `${ff.x}px`,
-                  '--ff-y': `${ff.y}px`,
-                  '--ff-dur': `${ff.dur}s`,
-                  '--ff-delay': `${ff.delay}s`,
-                } as React.CSSProperties}
-              />
-            ))}
-          </div>
-
-          <img
-            src="/ThirdPlace-Logo.png"
-            alt="Third Place Málaga Logo"
-            className="logo-breathe w-full opacity-90 saturate-50 contrast-125 hover:opacity-100 hover:saturate-100 relative"
-            style={{ zIndex: 2 }}
-          />
-        </div>
+        <img
+          src="/ThirdPlace-Logo.png"
+          alt="Third Place Málaga Logo"
+          className="logo-breathe w-full max-w-lg md:max-w-2xl mx-auto mb-8 opacity-90 saturate-50 contrast-125 hover:opacity-100 hover:saturate-100"
+        />
 
         <div className="mt-12 flex flex-col md:flex-row gap-6 justify-center items-center">
           <button
@@ -96,7 +119,7 @@ const Hero = ({ onCalendarOpen }: Props) => {
         </svg>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Hero;
+export default Hero
