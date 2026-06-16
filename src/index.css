@@ -108,6 +108,18 @@ body {
   animation: wa-border-flicker 5s ease-in-out infinite;
 }
 
+/* San Juan button shimmer */
+@keyframes sanjuan-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.sanjuan-btn {
+  background: linear-gradient(90deg, #c49a68 0%, #c49a68 35%, #f0d898 50%, #c49a68 65%, #c49a68 100%);
+  background-size: 200% auto;
+  animation: sanjuan-shimmer 3s ease-in-out infinite;
+}
+
 /* Fireflies around the logo */
 @keyframes firefly-rise {
   0%   { opacity: 0; transform: translate(0, 0) scale(0.4); }

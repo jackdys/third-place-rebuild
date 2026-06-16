@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Inspector } from 'react-dev-inspector'
-import { FaWhatsapp, FaInstagram, FaFacebook, FaMeetup } from 'react-icons/fa'
+import { FaWhatsapp, FaInstagram, FaFacebook, FaMeetup, FaPaypal, FaCcVisa, FaCcMastercard } from 'react-icons/fa'
 import { SiGmail } from 'react-icons/si'
 import Hero from './components/Hero'
 import CalendarModal from './components/CalendarModal'
@@ -17,12 +17,41 @@ function App() {
   const [videoOpen, setVideoOpen] = useState(false);
   const [activeActivity, setActiveActivity] = useState<ActivityData | null>(null);
   const [showWA, setShowWA] = useState(false);
+  const [showSanJuan, setShowSanJuan] = useState(false);
+  const [sanJuanOpen, setSanJuanOpen] = useState(false);
+  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const target = new Date('2026-07-01T00:00:00');
+    const tick = () => {
+      const diff = target.getTime() - Date.now();
+      if (diff <= 0) return setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      setCountdown({
+        days:    Math.floor(diff / 86400000),
+        hours:   Math.floor((diff % 86400000) / 3600000),
+        minutes: Math.floor((diff % 3600000) / 60000),
+        seconds: Math.floor((diff % 60000) / 1000),
+      });
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const sanJuanSeen = useRef(false);
 
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    const onScroll = () => setShowWA(el.scrollTop > window.innerHeight * 0.85);
+    const onScroll = () => {
+      const t = el.scrollTop;
+      const vh = window.innerHeight;
+      setShowWA(t > vh * 0.85);
+      if (!sanJuanSeen.current && t > vh * 1.5) {
+        sanJuanSeen.current = true;
+        setShowSanJuan(true);
+      }
+    };
     el.addEventListener('scroll', onScroll, { passive: true });
     return () => el.removeEventListener('scroll', onScroll);
   }, []);
@@ -139,40 +168,59 @@ function App() {
       <div className="fixed inset-0 pointer-events-none z-50 bg-noise"></div>
 
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 px-8 py-4 flex justify-between items-center bg-tp-black/80 backdrop-blur-lg border-b border-white/5">
+      <nav className="fixed top-0 w-full z-50 px-8 py-4 flex justify-between items-center bg-tp-black/80 backdrop-blur-lg border-b border-white/5 relative">
         <div className="flex items-center">
           <img src="/logo.png" alt="Third Place Málaga Logo" className="h-10 md:h-12 w-auto" />
+        </div>
+
+        {/* Countdown — centered in nav, appears when San Juan is unlocked */}
+        <div className={`absolute left-1/2 -translate-x-1/2 flex flex-col items-center transition-all duration-700 ${showSanJuan ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+          <p className="text-[#c49a68] text-[9px] uppercase tracking-[0.2em] mb-0.5">☀️ San Juan Special ends in</p>
+          <div className="flex items-center gap-1 font-mono">
+            {[{ v: countdown.days, l: 'd' }, { v: countdown.hours, l: 'h' }, { v: countdown.minutes, l: 'm' }, { v: countdown.seconds, l: 's' }].map(({ v, l }) => (
+              <span key={l} className="flex items-baseline gap-0.5">
+                <span className="text-white font-bold text-sm tabular-nums">{String(v).padStart(2, '0')}</span>
+                <span className="text-white/35 text-[10px]">{l}</span>
+                {l !== 's' && <span className="text-white/20 text-xs ml-0.5">·</span>}
+              </span>
+            ))}
+          </div>
         </div>
         <div className="hidden lg:flex gap-6 text-tp-cream font-semibold text-xs uppercase tracking-[0.2em] items-center">
           <a href="/" className="hover:text-tp-orange transition-colors">{t('nav.home')}</a>
           <a href="#" className="hover:text-tp-orange transition-colors">{t('nav.activities')}</a>
-          <button onClick={() => setCalendarOpen(true)} className="hover:text-tp-orange transition-colors">{t('nav.calendar')}</button>
-          
-          {/* Language Toggle */}
-          <button 
-            onClick={toggleLanguage}
-            className="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-full border border-white/10 transition-all text-tp-cream hover:text-tp-orange ml-2"
+
+          {/* Ghost calendar button */}
+          <button
+            onClick={() => setCalendarOpen(true)}
+            className="px-4 py-1.5 rounded-full border border-tp-orange/60 text-tp-orange hover:border-tp-orange hover:bg-tp-orange/10 transition-all tracking-widest text-xs"
           >
-            <span className={i18n.language === 'en' ? 'font-bold text-tp-orange' : 'opacity-70'}>EN</span>
-            <span className="opacity-40">/</span>
-            <span className={i18n.language === 'es' ? 'font-bold text-tp-orange' : 'opacity-70'}>ES</span>
+            {t('nav.calendar')}
+          </button>
+
+          {/* Flag language toggle */}
+          <button onClick={toggleLanguage} className="flex items-center gap-1.5 ml-1 hover:opacity-80 transition-opacity">
+            <span className={i18n.language === 'en' ? 'text-base' : 'text-base opacity-35'}>🇬🇧</span>
+            <span className="text-white/20 text-xs">·</span>
+            <span className={i18n.language === 'es' ? 'text-base' : 'text-base opacity-35'}>🇪🇸</span>
           </button>
         </div>
-        <div className="flex items-center gap-3 lg:hidden">
-            <button
-              onClick={() => setCalendarOpen(true)}
-              className="bg-tp-orange text-white px-4 py-1.5 rounded-md text-xs font-bold hover:bg-tp-green transition-all tracking-widest"
-            >
-              {t('nav.calendar')}
-            </button>
-            <button
-              onClick={toggleLanguage}
-              className="flex items-center gap-1 bg-white/5 px-3 py-1.5 rounded-full border border-white/10 text-xs"
-            >
-              <span className={i18n.language === 'en' ? 'font-bold text-tp-orange' : 'opacity-70'}>EN</span>
-              <span className="opacity-40">/</span>
-              <span className={i18n.language === 'es' ? 'font-bold text-tp-orange' : 'opacity-70'}>ES</span>
-            </button>
+
+        <div className="flex items-center gap-2 lg:hidden">
+          {/* Ghost calendar button — mobile */}
+          <button
+            onClick={() => setCalendarOpen(true)}
+            className="px-3 py-1.5 rounded-full border border-tp-orange/60 text-tp-orange text-xs font-semibold hover:bg-tp-orange/10 transition-all tracking-widest"
+          >
+            {t('nav.calendar')}
+          </button>
+
+          {/* Flag language toggle — mobile */}
+          <button onClick={toggleLanguage} className="flex items-center gap-1 hover:opacity-80 transition-opacity">
+            <span className={i18n.language === 'en' ? 'text-base' : 'text-base opacity-35'}>🇬🇧</span>
+            <span className="text-white/20 text-[10px]">·</span>
+            <span className={i18n.language === 'es' ? 'text-base' : 'text-base opacity-35'}>🇪🇸</span>
+          </button>
         </div>
 
       </nav>
@@ -191,7 +239,20 @@ function App() {
 
           <div className="relative max-w-5xl mx-auto text-center pt-16">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
-              {t('intro.title1')}
+              {t('intro.title1').split('Málaga').map((part, i, arr) => (
+                <span key={i}>
+                  {part}
+                  {i < arr.length - 1 && (
+                    <span style={{
+                      display: 'inline-block',
+                      background: 'linear-gradient(to bottom, #c60b1e 0% 40%, #ffc400 40% 60%, #c60b1e 60% 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                    }}>Málaga</span>
+                  )}
+                </span>
+              ))}
             </h2>
             <p className="text-tp-cream/40 text-xs md:text-sm uppercase tracking-[0.4em] mb-6">{t('intro.centeredAround')}</p>
             <ValuesReveal values={t('intro.values')} />
@@ -201,12 +262,21 @@ function App() {
         {/* 3. Intro — Body Copy */}
         <section
           className="snap-start relative px-6 overflow-hidden flex items-center justify-center"
-          style={{ height: '100dvh', backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.72) 50%, rgba(0,0,0,0.88) 100%), url(/malaga-bg.png)', backgroundSize: 'cover', backgroundPosition: 'top center' }}
+          style={{ height: '100dvh' }}
         >
-          <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-tp-green/10 rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/3 pointer-events-none" />
-          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-tp-orange/10 rounded-full blur-[100px] translate-x-1/4 -translate-y-1/4 pointer-events-none" />
+          {/* Video background */}
+          <video
+            autoPlay muted loop playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ zIndex: 0 }}
+            onLoadedData={(e) => { (e.target as HTMLVideoElement).currentTime = 2; }}
+          >
+            <source src="/slide3-bg-bounce.mp4" type="video/mp4" />
+          </video>
+          {/* Dark overlay */}
+          <div className="absolute inset-0" style={{ zIndex: 1, background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.7) 100%)' }} />
 
-          <div className="relative max-w-5xl mx-auto flex flex-col items-center text-center pt-16 overflow-y-auto">
+          <div className="relative max-w-5xl mx-auto flex flex-col items-center text-center pt-16 overflow-y-auto" style={{ zIndex: 2 }}>
             <div className="flex flex-col items-center mb-8">
               <div className="w-px h-10 bg-gradient-to-b from-transparent to-tp-orange" />
               <div className="w-2 h-2 rounded-full bg-tp-orange mt-1" />
@@ -338,18 +408,124 @@ function App() {
     </main>
     </div>
 
-    {/* WhatsApp Floating Button */}
-    <a
-      href={`https://wa.me/34624319964?text=${encodeURIComponent(t('whatsappMessage'))}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Join today on WhatsApp"
-      className={`wa-flicker fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-4 md:right-6 z-[150] flex items-center gap-3 bg-[#25D366] text-white px-4 md:px-5 py-3 rounded-lg shadow-lg hover:scale-105 active:scale-95 transition-all duration-500 ${showWA ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none translate-y-4'}`}
-    >
-      <span className="font-bold text-sm tracking-wide whitespace-nowrap">{t('joinToday')}</span>
-      <FaWhatsapp className="w-6 h-6 shrink-0 text-white" />
-    </a>
-    </>
+    {/* Floating buttons row */}
+    <div className={`fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-4 md:right-6 z-[150] flex items-center gap-2 transition-all duration-500 ${showWA ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none translate-y-4'}`}>
+      {/* San Juan Special button */}
+      <button
+        onClick={() => setSanJuanOpen(true)}
+        className={`sanjuan-btn flex items-center gap-2 text-white px-3 md:px-4 py-3 rounded-lg shadow-lg border border-white/70 hover:border-white hover:scale-105 active:scale-95 transition-all duration-500 ${showSanJuan ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}
+      >
+        <span className="text-lg leading-none">☀️</span>
+        <span className="font-bold text-xs md:text-sm tracking-wide whitespace-nowrap leading-tight text-left">
+          SAN JUAN SPECIAL!<br />
+          <span className="font-normal opacity-80 text-[10px] md:text-xs">Limited until 1 July</span>
+        </span>
+      </button>
+
+      {/* WhatsApp button */}
+      <a
+        href={`https://wa.me/34624319964?text=${encodeURIComponent(t('whatsappMessage'))}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Join today on WhatsApp"
+        className="wa-flicker flex items-center gap-3 bg-[#25D366] text-white px-4 md:px-5 py-3 rounded-lg shadow-lg hover:scale-105 active:scale-95 transition-all duration-300"
+      >
+        <span className="font-bold text-sm tracking-wide whitespace-nowrap">{t('joinToday')}</span>
+        <FaWhatsapp className="w-6 h-6 shrink-0 text-white" />
+      </a>
+    </div>
+
+    {/* San Juan Special Modal */}
+    {sanJuanOpen && (
+      <div
+        className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+        onClick={() => setSanJuanOpen(false)}
+      >
+        <div
+          className="relative bg-tp-black border border-white/10 rounded-3xl max-w-md w-full p-8 shadow-2xl"
+          onClick={e => e.stopPropagation()}
+        >
+          {/* Close */}
+          <button onClick={() => setSanJuanOpen(false)} className="absolute top-4 right-4 text-white/40 hover:text-white text-2xl leading-none">×</button>
+
+          {/* Header */}
+          <div className="text-center mb-6">
+            <p className="text-4xl mb-2">☀️</p>
+            <h2 className="text-3xl font-bold text-white" style={{ fontFamily: 'Cormorant Garamond, serif' }}>San Juan Special</h2>
+            <p className="text-[#c49a68] text-sm uppercase tracking-widest mt-1 font-semibold">Limited offer · ends 1 July</p>
+          </div>
+
+          {/* Divider */}
+          <div className="w-12 h-px bg-[#c49a68] mx-auto mb-6" />
+
+          {/* Offer */}
+          <p className="text-white/80 text-center text-base leading-relaxed mb-6" style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.15rem' }}>
+            Every Third Place Málaga activity, every session, <span className="text-white font-semibold">unlimited</span> — from now until the end of summer.
+          </p>
+
+          {/* Activities list */}
+          <ul className="space-y-2 mb-6 text-sm text-white/70">
+            {['Sacred Connections', 'Improv Theatre', 'Breathwork', "Men's Circle", 'Contact Improvisation', 'Conscious Playfights'].map(a => (
+              <li key={a} className="flex items-center gap-2">
+                <span className="text-[#2b997a] text-base">✓</span> {a}
+              </li>
+            ))}
+          </ul>
+
+          {/* Price */}
+          <div className="text-center bg-white/5 rounded-2xl py-5 mb-6 border border-white/10">
+            <p className="text-5xl font-bold text-white" style={{ fontFamily: 'Cormorant Garamond, serif' }}>497€</p>
+            <p className="text-white/50 text-sm mt-1">per person · unlimited attendance</p>
+            <p className="text-white/50 text-xs mt-0.5">Valid through 30 September</p>
+          </div>
+
+          {/* CTA — WhatsApp */}
+          <a
+            href={`https://wa.me/34624319964?text=${encodeURIComponent('Hi! I\'d like to claim the San Juan Special — all activities until end of summer for 497€.')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-3 w-full bg-[#25D366] text-white py-4 rounded-xl font-bold text-base hover:scale-105 active:scale-95 transition-all"
+          >
+            <FaWhatsapp className="w-5 h-5" />
+            Claim on WhatsApp
+          </a>
+
+          {/* Divider */}
+          <div className="flex items-center gap-3 my-4">
+            <div className="flex-1 h-px bg-white/10" />
+            <span className="text-white/30 text-xs uppercase tracking-widest">or pay directly</span>
+            <div className="flex-1 h-px bg-white/10" />
+          </div>
+
+          {/* Payment method buttons */}
+          <div className="grid grid-cols-3 gap-2">
+            {/* PayPal */}
+            <button className="flex flex-col items-center justify-center gap-1.5 bg-[#003087] hover:bg-[#002065] border border-[#009cde]/40 rounded-xl py-3 px-2 transition-all hover:scale-105 active:scale-95">
+              <FaPaypal className="w-6 h-6 text-[#009cde]" />
+              <span className="text-white text-xs font-semibold">PayPal</span>
+            </button>
+
+            {/* Bizum */}
+            <button className="flex flex-col items-center justify-center gap-1.5 bg-[#00A2E8] hover:bg-[#0090cf] border border-white/20 rounded-xl py-3 px-2 transition-all hover:scale-105 active:scale-95">
+              <span className="text-white font-black text-lg leading-none">B</span>
+              <span className="text-white text-xs font-semibold">Bizum</span>
+            </button>
+
+            {/* Card */}
+            <button className="flex flex-col items-center justify-center gap-1.5 bg-white/5 hover:bg-white/10 border border-white/15 rounded-xl py-3 px-2 transition-all hover:scale-105 active:scale-95">
+              <div className="flex items-center gap-1">
+                <FaCcVisa className="w-6 h-6 text-[#1A1F71]" style={{ filter: 'brightness(1.8)' }} />
+                <FaCcMastercard className="w-6 h-6 text-[#EB001B]" />
+              </div>
+              <span className="text-white/70 text-xs font-semibold">Card</span>
+            </button>
+          </div>
+          <p className="text-white/25 text-center text-[10px] mt-3">Secure payment · 497€ one-time</p>
+          <p className="text-white/30 text-center text-[10px] mt-1.5">Pay in 3 interest-free instalments with <span className="text-[#FFB3C7]">Klarna</span> or <span className="text-[#009cde]">PayPal</span></p>
+        </div>
+      </div>
+    )}
+</>
   )
 }
 
