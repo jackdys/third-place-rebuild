@@ -1,0 +1,44 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Open+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+@theme {
+  --color-tp-green: #2D5A27;
+  --color-tp-orange: #F4A261;
+  --color-tp-cream: #FAF9F6;
+  --color-tp-black: #0a0a0a; /* A rich, conscious black */
+  
+  --font-sans: 'Montserrat', sans-serif;
+  --font-body: 'Open Sans', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+}
+
+/* Global resets and base styles */
+body {
+  @apply bg-tp-black text-tp-cream font-body;
+  background-attachment: fixed;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://thirdplacemalaga.com/wp-content/uploads/2024/05/third-place-malaga-hero-scaled.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+h1, h2, h3, h4 {
+  @apply font-sans;
+}
+
+.font-accent {
+  @apply font-serif;
+}
+
+/* Custom scrollbar to match the vibe */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-tp-black;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-tp-green/50 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-tp-green;
+}
