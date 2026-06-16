@@ -329,7 +329,7 @@ const SacredConnections = () => {
           href={`https://wa.me/34624319964?text=${encodeURIComponent(t('whatsappMessage'))}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-4 md:right-6 z-[150] flex items-center gap-3 bg-[#25D366] text-white pl-4 md:pl-5 pr-3 md:pr-4 py-3 border-2 border-white/30 shadow-lg hover:scale-105 active:scale-95 transition-transform" style={{ borderRadius: '1.5rem 1.5rem 1.5rem 0.25rem' }}
+          className="fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-4 md:right-6 z-[150] flex items-center gap-3 bg-[#25D366] text-white pl-4 md:pl-5 pr-3 md:pr-4 py-3 border-[3px] border-white/70 shadow-lg hover:scale-105 active:scale-95 transition-transform" style={{ borderRadius: '1.5rem 1.5rem 1.5rem 0.25rem' }}
         >
           <span className="absolute inset-0 bg-[#25D366] wa-pulse" style={{ borderRadius: '1.5rem 1.5rem 1.5rem 0.25rem' }} />
           <span className="relative z-10 font-bold text-sm tracking-wide whitespace-nowrap">{t('joinToday')}</span>
