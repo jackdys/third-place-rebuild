@@ -20,7 +20,7 @@ const Hero = ({ onCalendarOpen }: Props) => {
       </div>
 
       <div className="relative z-10 text-center px-4 max-w-5xl">
-        <h2 className="text-2xl md:text-3xl text-white font-light italic mb-4 drop-shadow-lg opacity-90">
+        <h2 className="text-2xl md:text-3xl text-white font-light italic mb-4 drop-shadow-lg opacity-90" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
           {t('hero.subtitle')}
         </h2>
         <img
@@ -32,7 +32,7 @@ const Hero = ({ onCalendarOpen }: Props) => {
         <div className="mt-12 flex flex-col md:flex-row gap-6 justify-center items-center">
           <button
             onClick={onCalendarOpen}
-            className="bg-[#c49a68] text-white px-10 py-4 rounded-full text-xl font-bold hover:bg-tp-orange transition-all shadow-xl hover:scale-105 active:scale-95"
+            className="bg-[#c49a68] text-white px-10 py-4 rounded-lg text-xl font-bold hover:bg-tp-orange transition-all shadow-xl hover:scale-105 active:scale-95"
           >
             {t('hero.calendar')}
           </button>
@@ -45,7 +45,7 @@ const Hero = ({ onCalendarOpen }: Props) => {
         </div>
       </div>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce z-10 opacity-60">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 animate-bounce z-10 opacity-60">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="white" className="w-8 h-8">
           <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
         </svg>

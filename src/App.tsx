@@ -150,7 +150,7 @@ function App() {
         <div className="flex items-center gap-3 lg:hidden">
             <button
               onClick={() => setCalendarOpen(true)}
-              className="bg-tp-orange text-white px-4 py-1.5 rounded-full text-xs font-bold hover:bg-tp-green transition-all tracking-widest"
+              className="bg-tp-orange text-white px-4 py-1.5 rounded-md text-xs font-bold hover:bg-tp-green transition-all tracking-widest"
             >
               {t('nav.calendar')}
             </button>
@@ -208,7 +208,7 @@ function App() {
             <div className="mt-20 flex flex-col items-center">
               <button
                 onClick={() => setCalendarOpen(true)}
-                className="bg-tp-orange text-tp-black px-12 py-5 rounded-full text-xl font-bold hover:bg-white transition-all shadow-2xl hover:scale-105 active:scale-95 tracking-wide"
+                className="bg-tp-orange text-tp-black px-12 py-5 rounded-lg text-xl font-bold hover:bg-white transition-all shadow-2xl hover:scale-105 active:scale-95 tracking-wide"
               >
                 {t('intro.join')}
               </button>

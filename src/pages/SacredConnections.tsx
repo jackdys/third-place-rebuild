@@ -297,7 +297,7 @@ const SacredConnections = () => {
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button
                 onClick={() => setCalendarOpen(true)}
-                className="bg-tp-orange text-tp-black px-10 py-4 rounded-full font-bold text-lg hover:bg-white transition-all shadow-xl hover:scale-105 active:scale-95"
+                className="bg-tp-orange text-tp-black px-10 py-4 rounded-lg font-bold text-lg hover:bg-white transition-all shadow-xl hover:scale-105 active:scale-95"
               >
                 {es ? 'Ver nuestro calendario' : 'Check our calendar for the next event'}
               </button>
@@ -305,7 +305,7 @@ const SacredConnections = () => {
                 href={`https://wa.me/34624319964?text=${encodeURIComponent(t('whatsappMessage'))}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 border border-[#25D366]/40 text-[#25D366] px-8 py-4 rounded-full font-semibold hover:bg-[#25D366] hover:text-white transition-all"
+                className="flex items-center justify-center gap-2 border border-[#25D366]/40 text-[#25D366] px-8 py-4 rounded-lg font-semibold hover:bg-[#25D366] hover:text-white transition-all"
               >
                 <FaWhatsapp className="w-5 h-5" />
                 WhatsApp

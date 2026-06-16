@@ -237,7 +237,7 @@ const ActivityModal = ({ data, onClose, onCalendarOpen }: Props) => {
 
           <button
             onClick={() => { onClose(); onCalendarOpen() }}
-            className="w-full bg-tp-orange text-tp-black py-4 rounded-full font-bold text-lg hover:bg-white transition-all hover:scale-105 active:scale-95 tracking-wide"
+            className="w-full bg-tp-orange text-tp-black py-4 rounded-lg font-bold text-lg hover:bg-white transition-all hover:scale-105 active:scale-95 tracking-wide"
           >
             {es ? 'Reserva tu lugar' : 'Reserve your spot'}
           </button>
