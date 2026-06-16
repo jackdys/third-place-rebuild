@@ -22,13 +22,13 @@ const Hero = () => {
         <img 
           src="/ThirdPlace-Logo.png" 
           alt="Third Place Málaga Logo" 
-          className="w-full max-w-lg md:max-w-2xl mx-auto mb-8 drop-shadow-2xl opacity-90 saturate-50 contrast-125 transition-all duration-700 hover:opacity-100 hover:saturate-100"
+          className="logo-breathe w-full max-w-lg md:max-w-2xl mx-auto mb-8 opacity-90 saturate-50 contrast-125 hover:opacity-100 hover:saturate-100"
         />
         
         <div className="mt-12 flex flex-col md:flex-row gap-6 justify-center items-center">
           <a 
             href="https://thirdplacemalaga.com/calendar"
-            className="bg-tp-green text-white px-10 py-4 rounded-full text-xl font-bold hover:bg-tp-orange transition-all shadow-xl hover:scale-105 active:scale-95"
+            className="bg-[#c49a68] text-white px-10 py-4 rounded-full text-xl font-bold hover:bg-tp-orange transition-all shadow-xl hover:scale-105 active:scale-95"
           >
             {t('hero.calendar')}
           </a>

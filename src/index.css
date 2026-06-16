@@ -3,7 +3,7 @@
 
 @theme {
   --color-tp-green: #2D5A27;
-  --color-tp-orange: #F4A261;
+  --color-tp-orange: #2b997a;
   --color-tp-cream: #FAF9F6;
   --color-tp-black: #0a0a0a; /* A rich, conscious black */
   
@@ -30,6 +30,15 @@ body {
 
 .font-accent {
   @apply font-serif;
+}
+
+@keyframes logo-breathe {
+  0%, 100% { filter: drop-shadow(0 0 30px rgba(43, 153, 122, 0.3)) drop-shadow(0 30px 60px rgba(0, 0, 0, 0.9)); }
+  50%       { filter: drop-shadow(0 0 80px rgba(43, 153, 122, 0.75)) drop-shadow(0 30px 60px rgba(0, 0, 0, 0.9)); }
+}
+
+.logo-breathe {
+  animation: logo-breathe 4s ease-in-out infinite;
 }
 
 /* Custom scrollbar to match the vibe */
