@@ -30,7 +30,7 @@ const ValuesReveal = ({ values }: Props) => {
   }
 
   return (
-    <p ref={ref} className="font-accent italic font-light leading-relaxed" style={{ textShadow: '0 2px 16px rgba(0,0,0,0.9)' }}>
+    <p ref={ref} className="font-accent italic font-light leading-relaxed text-2xl md:text-3xl lg:text-4xl" style={{ textShadow: '0 2px 16px rgba(0,0,0,0.9)' }}>
       {words.map((word, i) => {
         const wordDelay = i * 600
         const dotDelay = wordDelay + 400
@@ -41,8 +41,7 @@ const ValuesReveal = ({ values }: Props) => {
               className={`value-word ${triggered ? 'animate' : ''}`}
               style={{ animationDelay: `${wordDelay}ms`, color }}
             >
-              <span style={{ fontSize: '2rem', lineHeight: 1 }}>{word[0]}</span>
-              <span style={{ fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{word.slice(1)}</span>
+              {word}
             </span>
             {i < words.length - 1 && (
               <span

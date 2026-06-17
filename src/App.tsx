@@ -157,7 +157,7 @@ function App() {
     {calendarOpen && <CalendarModal onClose={() => setCalendarOpen(false)} />}
     {videoOpen && <VideoModal src="/activities/breathwork-video.mp4" onClose={() => setVideoOpen(false)} onCalendarOpen={() => { setVideoOpen(false); setCalendarOpen(true) }} />}
     {activeActivity && <ActivityModal data={activeActivity} onClose={() => setActiveActivity(null)} onCalendarOpen={() => { setActiveActivity(null); setCalendarOpen(true) }} />}
-    <div ref={scrollRef} className="overflow-y-scroll overflow-x-hidden" style={{ height: '100dvh', scrollSnapType: 'y mandatory', overscrollBehavior: 'contain' }}>
+    <div ref={scrollRef} className="overflow-y-scroll overflow-x-hidden" style={{ height: '100dvh' }}>
     <main className="min-h-screen font-body selection:bg-tp-orange selection:text-tp-black">
       {/* Skip Link for Accessibility */}
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:bg-tp-orange focus:text-white focus:p-4">
@@ -167,24 +167,12 @@ function App() {
       {/* Global Texture Overlay */}
       <div className="fixed inset-0 pointer-events-none z-50 bg-noise"></div>
 
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 px-8 py-4 flex justify-between items-center bg-tp-black/80 backdrop-blur-lg border-b border-white/5 relative">
+      {/* Header stack — announcement bar + nav */}
+      <div className="fixed top-0 w-full z-50 flex flex-col">
+        {/* Navigation */}
+        <nav className="w-full px-8 py-4 flex justify-between items-center bg-tp-black/80 backdrop-blur-lg border-b border-white/5">
         <div className="flex items-center">
           <img src="/logo.png" alt="Third Place Málaga Logo" className="h-10 md:h-12 w-auto" />
-        </div>
-
-        {/* Countdown — centered in nav, appears when San Juan is unlocked */}
-        <div className={`absolute left-1/2 -translate-x-1/2 flex flex-col items-center transition-all duration-700 ${showSanJuan ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-          <p className="text-[#c49a68] text-[9px] uppercase tracking-[0.2em] mb-0.5">☀️ San Juan Special ends in</p>
-          <div className="flex items-center gap-1 font-mono">
-            {[{ v: countdown.days, l: 'd' }, { v: countdown.hours, l: 'h' }, { v: countdown.minutes, l: 'm' }, { v: countdown.seconds, l: 's' }].map(({ v, l }) => (
-              <span key={l} className="flex items-baseline gap-0.5">
-                <span className="text-white font-bold text-sm tabular-nums">{String(v).padStart(2, '0')}</span>
-                <span className="text-white/35 text-[10px]">{l}</span>
-                {l !== 's' && <span className="text-white/20 text-xs ml-0.5">·</span>}
-              </span>
-            ))}
-          </div>
         </div>
         <div className="hidden lg:flex gap-6 text-tp-cream font-semibold text-xs uppercase tracking-[0.2em] items-center">
           <a href="/" className="hover:text-tp-orange transition-colors">{t('nav.home')}</a>
@@ -225,20 +213,38 @@ function App() {
 
       </nav>
 
+        {/* San Juan announcement bar */}
+        <div className={`w-full transition-all duration-700 overflow-hidden ${showSanJuan ? 'max-h-16 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
+          <div className="flex items-center justify-center gap-3 px-4 py-2 bg-[#c49a68]/10 backdrop-blur-md border-b border-[#c49a68]/20">
+            <span className="text-lg leading-none">☀️</span>
+            <span className="text-[#c49a68] text-xs uppercase tracking-[0.2em] font-semibold whitespace-nowrap">San Juan Special ends in</span>
+            <div className="flex items-center gap-2 font-mono">
+              {[{ v: countdown.days, l: 'd' }, { v: countdown.hours, l: 'h' }, { v: countdown.minutes, l: 'm' }, { v: countdown.seconds, l: 's' }].map(({ v, l }) => (
+                <span key={l} className="flex items-baseline gap-0.5">
+                  <span className="text-white font-bold text-base tabular-nums">{String(v).padStart(2, '0')}</span>
+                  <span className="text-white/40 text-xs">{l}</span>
+                  {l !== 's' && <span className="text-white/20 text-sm ml-1">·</span>}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>{/* end header stack */}
+
       <div id="main-content">
         {/* 1. Hero Section */}
         <Hero onCalendarOpen={() => setCalendarOpen(true)} />
 
         {/* 2. Intro — Title + Values */}
         <section
-          className="snap-start relative px-6 overflow-hidden flex items-center justify-center"
-          style={{ height: '100dvh', backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.82) 50%, rgba(0,0,0,0.88) 100%), url(/malaga-bg.png)', backgroundSize: 'cover', backgroundPosition: 'top center' }}
+          className="relative px-6 overflow-hidden flex items-center justify-center"
+          style={{ minHeight: '100dvh', backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.75) 40%, rgba(0,0,0,0.9) 75%, rgba(0,0,0,1) 100%), url(/malaga-bg.png)', backgroundSize: 'cover', backgroundPosition: 'top center' }}
         >
           <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-tp-green/10 rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/3 pointer-events-none" />
           <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-tp-orange/10 rounded-full blur-[100px] translate-x-1/4 -translate-y-1/4 pointer-events-none" />
 
           <div className="relative max-w-5xl mx-auto text-center pt-16">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 leading-tight" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
               {t('intro.title1').split('Málaga').map((part, i, arr) => (
                 <span key={i}>
                   {part}
@@ -254,15 +260,15 @@ function App() {
                 </span>
               ))}
             </h2>
-            <p className="text-tp-cream/40 text-xs md:text-sm uppercase tracking-[0.4em] mb-6">{t('intro.centeredAround')}</p>
+            <p className="text-tp-cream/40 text-xs md:text-base uppercase tracking-[0.4em] mb-6">{t('intro.centeredAround')}</p>
             <ValuesReveal values={t('intro.values')} />
           </div>
         </section>
 
         {/* 3. Intro — Body Copy */}
         <section
-          className="snap-start relative px-6 overflow-hidden flex items-center justify-center"
-          style={{ height: '100dvh' }}
+          className="relative px-6 overflow-hidden flex items-center justify-center"
+          style={{ minHeight: '100dvh' }}
         >
           {/* Video background */}
           <video
@@ -274,7 +280,7 @@ function App() {
             <source src="/slide3-bg-bounce.mp4" type="video/mp4" />
           </video>
           {/* Dark overlay */}
-          <div className="absolute inset-0" style={{ zIndex: 1, background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.7) 100%)' }} />
+          <div className="absolute inset-0" style={{ zIndex: 1, background: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 20%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.7) 80%, rgba(0,0,0,1) 100%)' }} />
 
           <div className="relative max-w-5xl mx-auto flex flex-col items-center text-center pt-16 overflow-y-auto" style={{ zIndex: 2 }}>
             <div className="flex flex-col items-center mb-8">
@@ -298,7 +304,7 @@ function App() {
         </section>
 
         {/* 4. Activities */}
-        <section id="activities" className="snap-start min-h-screen py-10 md:py-20 px-6 bg-tp-black/50 border-y border-white/5 flex flex-col justify-center">
+        <section id="activities" className="min-h-screen py-10 md:py-20 px-6 bg-tp-black/50 border-y border-white/5 flex flex-col justify-center">
           <div className="max-w-6xl mx-auto">
             <h3 className="text-3xl md:text-4xl font-bold text-white text-center mb-10 md:mb-20" style={{ fontFamily: 'Cormorant Garamond, serif' }}>{t('experience.title')}</h3>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 md:gap-x-8 md:gap-y-16 place-items-center">
@@ -337,7 +343,7 @@ function App() {
       </div>
 
       {/* 5. Map */}
-      <section className="snap-start min-h-screen bg-tp-black pt-24 pb-16 px-8 border-t border-white/10 flex flex-col justify-center">
+      <section className="min-h-screen bg-tp-black pt-24 pb-16 px-8 border-t border-white/10 flex flex-col justify-center">
         <div className="max-w-6xl mx-auto w-full">
           <h5 className="font-bold text-tp-orange text-xl mb-8 uppercase tracking-widest">{t('footer.visit')}</h5>
           <div className="rounded-3xl overflow-hidden border border-white/10 h-[300px] md:h-[460px] mb-8 shadow-2xl">
@@ -442,7 +448,7 @@ function App() {
         onClick={() => setSanJuanOpen(false)}
       >
         <div
-          className="relative bg-tp-black border border-white/10 rounded-3xl max-w-md w-full p-8 shadow-2xl"
+          className="relative bg-tp-black border border-white/10 rounded-3xl max-w-md w-full p-5 md:p-8 shadow-2xl overflow-y-auto max-h-[90dvh]"
           onClick={e => e.stopPropagation()}
         >
           {/* Close */}

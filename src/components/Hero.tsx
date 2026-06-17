@@ -102,7 +102,7 @@ const Hero = ({ onCalendarOpen }: Props) => {
   const { t } = useTranslation()
 
   return (
-    <section className="relative flex items-center justify-center overflow-hidden snap-start" style={{ height: '100dvh' }}>
+    <section className="relative flex items-center justify-center overflow-hidden" style={{ minHeight: '100dvh' }}>
       {/* Background */}
       <div className="absolute inset-0 z-0">
         <img
